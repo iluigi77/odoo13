@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="verticals_lots_form" model="ir.ui.view">
+            <field name="name">verticals.verticals.form</field>
+            <field name="model">verticals.verticals</field>
+            <field name="arch" type="xml">
+                <form string="Lotes Verticales">
+                    <group>
+                        <field name="name"/>
+                        <field name="pdf_bin"/>
+                        <field name="product_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+
+        <!-- PRE ORDER LINE -->
+
+        <!-- <record id="verticals_pre_order_line_tree" model="ir.ui.view">
+            <field name="name">verticals.preorderline.tree</field>
+            <field name="model">verticals.preorderline</field>
+            <field name="arch" type="xml">
+                <tree string="Lotes Verticales">
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="price_unit" />
+                    <field name="product_uom_qty"/>
+                    <field name="customer_lead"/>
+                </tree>
+            </field>
+        </record> -->
+
+
+    </data>
+</odoo>
