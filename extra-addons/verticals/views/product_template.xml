@@ -1,16 +1,18 @@
 <odoo>
     <data>
+        <!-- PDF BIN FOR PRODUCT TEMPLATE -->
         <record id="pdf_product" model="ir.ui.view">
             <field name="name">product.template.pdf</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='group_general']" position="inside">
-                    <!-- <field name="pdf_bin"/> -->
+                    <field name="pdf_bin"/>
                 </xpath>
           </field>
         </record>
 
+        <!-- RELATINSHIP WITH VERTICALS LOT FOR PRODUCT TEMPLATE -->
         <record id="vertical_lot_for_product" model="ir.ui.view">
             <field name="name">product.template.vertical_lot</field>
             <field name="model">product.template</field>
@@ -22,6 +24,7 @@
           </field>
         </record>
 
+        <!-- LIST PRODUCTS BY VERTICALS LOT FOR PRODUCT TEMPLATE -->
         <record id="list_vertical_lot" model="ir.ui.view">
             <field name="name">product.template.list_vertical_lot</field>
             <field name="model">product.template</field>
@@ -30,11 +33,6 @@
                 <xpath expr="//page[@name='general_information']//group[1]" position="after">
                     <page name="list_for_vertical_lot" >
                         <group string="Lote Vertical">
-                            <!-- <field name="products_by_lots">
-                                <tree>
-                                    <field name="name" />
-                                </tree>
-                            </field>  -->
                             <tree >
                                 <field name="products_by_lots" />
                             </tree>

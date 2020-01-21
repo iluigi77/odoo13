@@ -13,8 +13,12 @@ class ProductTemplate(models.Model):
     #for show products
     products_by_lots = fields.Many2many('product.template', string= 'Lote', compute='_get_products_from_lot', store= False)
 
-    @api.depends('vertical_id')
+    @api.onchange('vertical_id')
     def _get_products_from_lot(self):
-        self.products_by_lots= self.vertical_id.mapped('product_ids')
-
+        lots = self.vertical_id.mapped('product_ids')
+        self.products_by_lots= lots
+        # self.products_by_lots= []
+        # idd= self.vertical_id.id
+        # if idd:
+        #     lots = self.env['verticals.verticals'].search([('id', '=', idd)]).mapped('product_ids')
 
