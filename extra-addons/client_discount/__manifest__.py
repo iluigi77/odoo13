@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "verticals",
+    'name': "client_discount",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,14 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'sale_management', 'client_discount'],
+    'depends': ['base', 'web'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/verticals_lot.xml',
-        'views/sale_order.xml',
-        'views/product_template.xml',
+        # 'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

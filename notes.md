@@ -32,8 +32,12 @@
 ___ 
 ## Backend.
 
-### Agregar tuplas al order line
+### Heredar de un modelo
+~~~
+_inherit = 'product.template'
+~~~
 
+### Agregar tuplas al order line
 ~~~
 products_lot = self.vertical_id.mapped('product_ids')
     for p in products_lot:
