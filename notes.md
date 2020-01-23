@@ -26,6 +26,20 @@
 </xpath>
 ~~~
 
+### Herencia
+~~~
+<record id="discount_in_order_line" model="ir.ui.view">
+    <field name="name">sale.order.discount_order_line</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="replace">
+            <field name="discount" string="Desc.%"/>
+        </xpath>
+    </field>
+</record>
+~~~
+
 ### Heredar por name
 ~~~
 <xpath expr="//group[@name='group_general']" position="inside">
@@ -78,6 +92,39 @@ products_lot = self.vertical_id.mapped('product_ids')
             })]
         for line in self.order_line:
             line.product_id_change()
+~~~
+
+### search operators
+~~~
+Can anyone provide me a scenario where we need to use these operators in domain:
+
+1. =?         es igual a = pero retorna True si el lado derecho es Falso o None
+2. =like      es igual a la like pero no le agrega los %%
+3. =ilike     es igual a =like pero ignorando mayúsculas y minusculals
+4. like       es un like con %%
+5. ilike      es un like con %% ignorando mayúsuculas y minusuculas
+6. child_of
+~~~
+
+### Operaciones con records
+~~~
+record in recset1           # include
+record not in recset1       # not include
+recset1 + recset2           # extend
+recset1 | recset2           # union
+recset1 & recset2           # intersect
+recset1 - recset2           # difference
+~~~
+
+### Operaciones magicas con registros sin orm
+~~~
+(0, 0,  { values })    link to a new record that needs to be created with the given values dictionary
+(1, ID, { values })    update the linked record with id = ID (write values on it)
+(2, ID)                remove and delete the linked record with id = ID (calls unlink on ID, that will delete the object completely, and the link to it as well)
+(3, ID)                cut the link to the linked record with id = ID (delete the relationship between the two objects but does not delete the target object itself)
+(4, ID)                link to existing record with id = ID (adds a relationship)
+(5)                    unlink all (like using (3,ID) for all linked records)
+(6, 0, [IDs])          replace the list of linked IDs (like using (5) then (4,ID) for each ID in the list of IDs)
 ~~~
 
 ### Almacenar datos binarios
