@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "client_discount",
+    'name': "service_budget",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,13 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'sale_management'],
+    'depends': ['base', 'stock', 'sale_management', 'client_discount'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/res_partner.xml',
         'views/sale_order.xml',
+        'views/product_template.xml',
+        'views/report_customer.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <record id="total_services" model="ir.ui.view">
+            <field name="name">sale.order.total_service</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//group[@name='note_group']//group[@name='sale_total']//field[@name='amount_tax']" position="after">
+                    <field name="amount_total_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="amount_total_no_service" />
+                        </div>
+                    <field name="amount_total_no_service" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                </xpath> -->
+                <xpath expr="//group[@name='note_group']" position="replace">
+                    <group name="note_group" col="12">
+                        <group colspan="6">
+                            <field name="note" nolabel="2" placeholder="Terms and conditions..."/>
+                        </group>
+                        
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total_services">
+                            <h3 class='oe_right'>Servicios</h3>
+                            <field name="amount_untaxed_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total_service" />
+                            </div>
+                            <field name="amount_total_service" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total_no_services">
+                            <h3 class='oe_right'>Productos</h3>
+                            <field name="amount_untaxed_no_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax_no_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total_no_service" />
+                            </div>
+                            <field name="amount_total_no_service" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </group>
+
+                    <group name="note_group2" col="6">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <h3 class='oe_right'>Total</h3>
+                            <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total" />
+                            </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="service_in_order_line" model="ir.ui.view">
+            <field name="name">sale.order.no_budgetable_order_line</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
+                    <field name="no_budgetable" readonly="1" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record id="service_in_order_line" model="ir.ui.view">
+            <field name="name">sale.order.order_line_services</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='order_lines']" position="before">
+                    <page name="order_line_services_list" string="Lineas de servicios" >
+                        <field 
+                            name="order_line"
+                            mode="tree"
+                            attrs="{'readonly': True}"
+                            >
+                            <tree string="Servicios">
+                                <field name='name'/>
+                            </tree>
+                           
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record> -->
+
+    </data>
+</odoo>

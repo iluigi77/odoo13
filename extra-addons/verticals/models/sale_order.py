@@ -5,13 +5,13 @@ from odoo import models, fields, api
 class SalesOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    group_lot = fields.Many2one('verticals.verticals', string= 'Lote Vetical')
+    group_lot = fields.Many2one('verticals.verticals', string= 'Vetical')
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     pdf_bin = fields.Binary(string='PDF Adjunto')
-    vertical_id = fields.Many2one('verticals.verticals', string= 'Lote Vetical')
+    vertical_id = fields.Many2one('verticals.verticals', string= 'Vetical')
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -24,7 +24,6 @@ class SaleOrder(models.Model):
     @api.onchange('vertical_id')
     def _onchange_vertical_id(self):
         if self.vertical_id:
-            name= self.vertical_id.name
             lot= self.vertical_id
             discount= 0
             if self.partner_id:
@@ -32,11 +31,12 @@ class SaleOrder(models.Model):
 
             self.order_line = [(0,0, {
                 'display_type': 'line_section',
-                'name': name,
+                'name': lot.name,
                 'price_unit': 0.0,
                 'product_id': None,             
                 'product_uom_qty': 0,
                 'customer_lead': 0.0,
+                'group_lot': lot.id,
             })]
             for line in self.order_line:
                 line.product_id_change()
