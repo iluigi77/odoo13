@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record id="social_media_client_social_network_form" model="ir.ui.view">
+            <field name="name">social_media_client.social_network.form</field>
+            <field name="model">social_media_client.social_network</field>
+            <field name="arch" type="xml">
+                <form string="Currency Master">
+                    <sheet>
+                        <group name="main" string="Crear Denominación de Moneda">
+                            <group name="right">
+                            <field name="web" />
+                                <field name="url" />
+                                <field name="logo" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="social_media_client_social_network_tree" model="ir.ui.view">
+            <field name="name">social_media_client.social_network.tree</field>
+            <field name="model">social_media_client.social_network</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="web" />
+                    <field name="url" />
+                    <!-- <field name="logo" /> -->
+                </tree>
+            </field>
+        </record>
+
+        <record id="social_media_client_social_network_search" model="ir.ui.view">
+            <field name="name">social_media_client.social_network.search</field>
+            <field name="model">social_media_client.social_network</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="web" />
+                    <field name="url" />
+                    <!-- <field name="logo" /> -->
+                </search>
+            </field>
+        </record>
+
+        
+    </data>
+</odoo>

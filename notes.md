@@ -209,3 +209,9 @@ def _onchange_order_line(self):
                     </group>
                 </xpath>
 ~~~
+
+~~~
+ <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="string">VAT</attribute>
+                </xpath>
+~~~

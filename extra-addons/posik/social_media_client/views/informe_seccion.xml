@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+      <record id="social_media_client_informe_seccion_form" model="ir.ui.view">
+            <field name="name">social_media_client.informe_seccion.form</field>
+            <field name="model">social_media_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <!-- <field name="subseccion_id" /> -->
+                            <group name="right">
+                                <field name="description" />
+                                <field name="note" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="social_media_client_informe_seccion_tree" model="ir.ui.view">
+            <field name="name">social_media_client.informe_seccion.tree</field>
+            <field name="model">social_media_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="tittle" />
+                    <field name="description" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="social_media_client_informe_seccion_search" model="ir.ui.view">
+            <field name="name">social_media_client.informe_seccion.search</field>
+            <field name="model">social_media_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="tittle" />
+                    <field name="description" />
+                    <field name="note" />
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>
