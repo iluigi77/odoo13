@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_posik_project_posik_project,posik_project.posik_project,model_posik_project_posik_project,base.group_user,1,1,1,1

@@ -10,14 +10,6 @@
         <menuitem id="seting_menu_root" name="Ajustes por Defecto" sequence="30"  action="action_social_network"/> 
     
 
-        <!-- <record model="ir.actions.act_window" id="action_web_site">
-            <field name="name">Sitios Web</field>
-            <field name="res_model">social_media_client.web_site</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{'group_by':['client_id']}</field>
-        </record>
-        <menuitem name="Sitios Web" id="menu_web_site" action="action_web_site" sequence="4"  parent="seting_menu_root"/> -->
-
         <record model="ir.actions.act_window" id="action_informe_seccion">
             <field name="name">Secciones de Informes</field>
             <field name="res_model">social_media_client.informe_seccion</field>
