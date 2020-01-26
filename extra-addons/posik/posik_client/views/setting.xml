@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+       <record id="posik_client_default_setting_form" model="ir.ui.view">
+            <field name="name">posik_client.default_setting.form</field>
+            <field name="model">posik_client.default_setting</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <field name="default_informe_text" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="posik_client_default_setting_tree" model="ir.ui.view">
+            <field name="name">posik_client.default_setting.tree</field>
+            <field name="model">posik_client.default_setting</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="default_informe_text" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="posik_client_default_setting_search" model="ir.ui.view">
+            <field name="name">posik_client.default_setting.search</field>
+            <field name="model">posik_client.default_setting</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="default_informe_text" />
+                </search>
+            </field>
+        </record>
+
+        <!-- <record model="ir.actions.act_window" id="action_default_setting">
+            <field name="name">Secciones de Informes</field>
+            <field name="res_model">posik_client.default_setting</field>
+            <field name="view_mode">tree,form</field>
+        </record> -->
+        
+        <record id="action_default_setting" model="ir.actions.act_window">
+            <field name="name">Secciones de Informes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">posik_client.default_setting</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="posik_client_default_setting_form"/>
+            <field name="target">new</field>
+        </record>
+        
+        
+        <menuitem name="Texto inicio informes por defecto" id="default_text_menu_root" action="action_default_setting" sequence="10" />
+      
+    </data>
+</odoo>

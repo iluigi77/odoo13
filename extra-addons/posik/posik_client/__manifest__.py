@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "posik_report",
+    'name': "posik_client",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,13 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'posik_project', 'posik_client'],
+    'depends': ['base' , 'contacts'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/report_view.xml',
+        'views/web_site.xml',
+        'views/social_network.xml',
+        'views/informe_seccion.xml',
         'views/setting.xml',
+        'views/res_partner.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

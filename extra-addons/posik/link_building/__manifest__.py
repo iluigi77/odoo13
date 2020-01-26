@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "social_media_client",
+    'name': "link_building",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,16 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base' , 'contacts', 'product'],
+    'depends': ['base'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/web_site.xml',
-        'views/social_network.xml',
-        'views/informe_seccion.xml',
-        'views/setting.xml',
-        'views/res_partner.xml',
+        # 'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

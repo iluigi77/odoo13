@@ -1,5 +1,49 @@
 <odoo>
     <data>
+        <record id="posik_report_posik_report_form" model="ir.ui.view">
+            <field name="name">posik_report.posik_report.form</field>
+            <field name="model">posik_report.posik_report</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name='header'>
+                        
+                        </group>
+                        <group name="tittle">
+                            <field name="client_id" />
+                            <field name="tittle" />
+                            <field name="name_client" readonly="1"/>
+                            <hr/>
+                            <field name="informe_text_client"/>
+                            <!-- <field name="subseccion_id" /> -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
+        <!-- <record id="posik_report_posik_report_tree" model="ir.ui.view">
+            <field name="name">posik_report.posik_report.tree</field>
+            <field name="model">posik_report.posik_report</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="tittle" />
+                    <field name="description" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record> -->
+
+        <!-- <record id="posik_report_posik_report_search" model="ir.ui.view">
+            <field name="name">posik_report.posik_report.search</field>
+            <field name="model">posik_report.posik_report</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="tittle" />
+                    <field name="description" />
+                    <field name="note" />
+                </search>
+            </field>
+        </record> -->
     </data>
 </odoo>

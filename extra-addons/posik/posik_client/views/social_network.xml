@@ -1,8 +1,8 @@
 <odoo>
     <data>
-        <record id="social_media_client_social_network_form" model="ir.ui.view">
-            <field name="name">social_media_client.social_network.form</field>
-            <field name="model">social_media_client.social_network</field>
+        <record id="posik_client_social_network_form" model="ir.ui.view">
+            <field name="name">posik_client.social_network.form</field>
+            <field name="model">posik_client.social_network</field>
             <field name="arch" type="xml">
                 <form string="Currency Master">
                     <sheet>
@@ -18,9 +18,9 @@
             </field>
         </record>
 
-        <record id="social_media_client_social_network_tree" model="ir.ui.view">
-            <field name="name">social_media_client.social_network.tree</field>
-            <field name="model">social_media_client.social_network</field>
+        <record id="posik_client_social_network_tree" model="ir.ui.view">
+            <field name="name">posik_client.social_network.tree</field>
+            <field name="model">posik_client.social_network</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="web" />
@@ -30,9 +30,9 @@
             </field>
         </record>
 
-        <record id="social_media_client_social_network_search" model="ir.ui.view">
-            <field name="name">social_media_client.social_network.search</field>
-            <field name="model">social_media_client.social_network</field>
+        <record id="posik_client_social_network_search" model="ir.ui.view">
+            <field name="name">posik_client.social_network.search</field>
+            <field name="model">posik_client.social_network</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="web" />
@@ -41,6 +41,15 @@
                 </search>
             </field>
         </record>
+
+        <record model="ir.actions.act_window" id="action_social_network">
+            <field name="name">Redes Sociales</field>
+            <field name="res_model">posik_client.social_network</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="social_network_menu_root" name="Redes Sociales" sequence="30"  action="action_social_network"/> 
+    
+
 
         
     </data>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_posik_client_web_site,posik_client.web_site,model_posik_client_web_site,base.group_user,1,1,1,1
+access_posik_client_social_network,posik_client.social_network,model_posik_client_social_network,base.group_user,1,1,1,1
+access_posik_client_informe_seccion,posik_client.informe_seccion,model_posik_client_informe_seccion,base.group_user,1,1,1,1
+access_posik_client_informe_subseccion,posik_client.informe_subseccion,model_posik_client_informe_subseccion,base.group_user,1,1,1,1
+access_posik_client_default_setting,posik_client.default_setting,model_posik_client_default_setting,base.group_user,1,1,1,1

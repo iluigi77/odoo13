@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="posik_client_web_site_form" model="ir.ui.view">
+            <field name="name">posik_client.web_site.form</field>
+            <field name="model">posik_client.web_site</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <group name="right">
+                                <field name="web" />
+                                <field name="url" />
+                                <field name="logo" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="posik_client_web_site_tree" model="ir.ui.view">
+            <field name="name">posik_client.web_site.tree</field>
+            <field name="model">posik_client.web_site</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="web" />
+                    <field name="url" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="posik_client_web_site_search" model="ir.ui.view">
+            <field name="name">posik_client.web_site.search</field>
+            <field name="model">posik_client.web_site</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="web" />
+                    <field name="url" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_informe_seccion">
+            <field name="name">Secciones de Informes</field>
+            <field name="res_model">posik_client.informe_seccion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Secciones de Informes" id="informe_seccion_menu_root" action="action_informe_seccion" sequence="5" />
+      
+    </data>
+</odoo>

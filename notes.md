@@ -1,4 +1,5 @@
 # Odoo
+
 ## Frontend.
 
 ### Quitar botones de crear , editar o abrir modal en los campos de una vista
@@ -13,20 +14,8 @@
 </tree>
 ~~~
 
-### Page para mostrar treeview
-~~~
-<xpath expr="//page[@name='general_information']//group[1]" position="after">
-    <page name="list_for_vertical_lot" >
-        <group string="Lote Vertical">
-            <tree >
-                <field name="products_by_lots" />
-            </tree>
-        </group>
-    </page>    
-</xpath>
-~~~
 
-### Herencia
+### [HERENCIA]
 ~~~
 <record id="discount_in_order_line" model="ir.ui.view">
     <field name="name">sale.order.discount_order_line</field>
@@ -40,14 +29,23 @@
 </record>
 ~~~
 
-### Heredar por name
+
+
+### [HERENCIA]: Heredar field y agregar atributo
+~~~
+<xpath expr="//field[@name='vat']" position="attributes">
+    <attribute name="string">VAT</attribute>
+</xpath>
+~~~
+
+### [HERENCIA]: Heredar por name
 ~~~
 <xpath expr="//group[@name='group_general']" position="inside">
     <field name="vertical_id"/>
 </xpath>
 ~~~
 
-### Heredar por bloques
+### [HERENCIA]: Heredar por bloques
 ~~~
 <xpath expr="//form//sheet//notebook[1]" position="before">
     <group>
@@ -56,7 +54,7 @@
 </xpath>
 ~~~
 
-### heredar en la cabecera de product form, al lado de actualizar inventario
+### [HERENCIA]: heredar en la cabecera de product form, al lado de actualizar inventario
 ~~~
 <xpath expr="//form//sheet//field[1]" position="after">
     <button string="tester" type="action" name="show_list_products_by_lots" />
@@ -65,6 +63,9 @@
 
 
 ___ 
+
+
+
 ## Backend.
 
 ### Ternario
@@ -162,56 +163,6 @@ def _amount_all(self):
 
 
 # mientras
-~~~
-@api.onchange('order_line')
-def _onchange_order_line(self):
-    for line in self.order_line:
-        p= line.product_id
-        if p.product_tmpl_id.no_budgetable:
-            line.price_unit= 0
-            line.product_id_change()
-~~~
 
 
 
-~~~
-<xpath expr="//group[@name='note_group']" position="replace">
-                    <group name="note_group" col="6">
-                        <group colspan="2">
-                            <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
-                        </group>
-                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                            <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                <label for="amount_total" />
-                            </div>
-                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total_services">
-                            <field name="amount_untaxed_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="amount_tax_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                <label for="amount_total_service" />
-                            </div>
-                            <field name="amount_total_service" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total_no_services">
-                            <field name="amount_untaxed_no_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="amount_tax_no_service" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                <label for="amount_total_no_service" />
-                            </div>
-                            <field name="amount_total_no_service" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                        
-                        <div class="oe_clear"/>
-                    </group>
-                </xpath>
-~~~
-
-~~~
- <xpath expr="//field[@name='vat']" position="attributes">
-                    <attribute name="string">VAT</attribute>
-                </xpath>
-~~~

@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <record id="posik_client_informe_subseccion_form" model="ir.ui.view">
+            <field name="name">posik_client.informe_subseccion.form</field>
+            <field name="model">posik_client.informe_subseccion</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <field name="name" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="posik_client_informe_subseccion_tree" model="ir.ui.view">
+            <field name="name">posik_client.informe_subseccion.tree</field>
+            <field name="model">posik_client.informe_subseccion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+      <record id="posik_client_informe_seccion_form" model="ir.ui.view">
+            <field name="name">posik_client.informe_seccion.form</field>
+            <field name="model">posik_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <group name="right">
+                                <field name="name" />
+                                <field name="description" />
+                                <field name="note" />
+                            </group>
+                            <field name="subseccion_id" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="posik_client_informe_seccion_tree" model="ir.ui.view">
+            <field name="name">posik_client.informe_seccion.tree</field>
+            <field name="model">posik_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="posik_client_informe_seccion_search" model="ir.ui.view">
+            <field name="name">posik_client.informe_seccion.search</field>
+            <field name="model">posik_client.informe_seccion</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="note" />
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

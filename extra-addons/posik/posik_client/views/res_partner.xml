@@ -13,14 +13,14 @@
 
                 <xpath expr="//form//sheet//group[1]" position="after">
                     <group string='Informes'>
-                        <field name="Informe_text" />
+                        <field name="informe_text" />
                     </group>
                     <group>
                         <group string='Sitios Web'>
                             <field name="web_site" />
                         </group>
                         <group string='Redes Sociales'>
-                            <field name="social_network" />
+                            <field name="social_network"  options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
                         </group>
                     </group>
                 </xpath>
