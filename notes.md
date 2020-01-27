@@ -2,6 +2,20 @@
 
 ## Frontend.
 
+### readonly dinamico
+~~~
+<field name='short_timesheet'/> 
+<field name="unit_amount" widget="timesheet_uom"  attrs="{'readonly':[('short_timesheet','=',True)]}" />
+~~~
+
+### Default order
+~~~
+<tree string="Sales Order Lines"  default_order="sequence desc">
+    <field name="order_id"/>
+    <field name="sequence"/>
+</tree>
+~~~
+
 ### Quitar botones de crear , editar o abrir modal en los campos de una vista
 ~~~
 <field name="code" options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
@@ -162,7 +176,52 @@ def _amount_all(self):
 ~~~
 
 
+### Default order
+~~~
+class NameClass(....):
+    _inherit = "name.class"
+    _order = "custom_field_name, other_field ..." (you can add option asc or desc too)
+~~~
 # mientras
 
+~~~
+<xpath expr="//form//sheet//notebook//page[@id='timesheets_tab']" position="after">
+    <page string="Partes de horas acumuladas" id="timesheets_no_time_tab" attrs="{'invisible': [('allow_timesheets', '=', False)]}">
+        <field 
+            name="timesheet_no_time_ids" 
+            mode="tree" 
+            attrs="{'invisible': [('analytic_account_active', '=', False)]}" 
+            context="{'default_no_time': True}"
+            >
+            <tree 
+                editable="bottom" 
+                string="Timesheet Activities" 
+                default_order="date" 
+                attrs="{'invisible': [('no_time', '=', True)]}"
+                >
+                <field name="date"/>
+                <field name="user_id" invisible="1"/>
+                <field name="employee_id" required="1"/>
 
+                <field name='client_id' 
+                    class="o_task_user_field"
+                    options='{"no_open": True}'/>
+                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                <field name='url'/>
+                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+            
+                <field name="name"/>
+
+                <field name='pic_activity'/>
+
+                <field name="no_time" invisible="0"/>
+                <field name="unit_amount" widget="timesheet_uom" readonly='1'/>
+                <field name="project_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+            </tree>
+        </field>
+    </page>
+</xpath>
+~~~
 

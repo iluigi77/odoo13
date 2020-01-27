@@ -26,10 +26,17 @@ class PosikReport(models.Model):
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
     name_client = fields.Char(string='Nombre del Cliente', compute='_on_change_client_id', readonly="1")
     informe_text_client = fields.Text(string="Texto Inicio de Informes", required= True)
+    all_activity = fields.Many2many('account.analytic.line', string='Todas las tareas', compute= '_on_change_client_id', readonly='1')
     activity_url = fields.Many2many('account.analytic.line', string='Tareas con URL', compute= '_on_change_client_id', readonly='1')
     activity_no_url = fields.Many2many('account.analytic.line', string='Tareas sin URL', compute= '_on_change_client_id', readonly='1')
+    seccion_ids = fields.Many2many('posik_client.informe_subseccion', string='Secciones', compute= '_load_seccions', readonly='1')
     # link_building = fields.Many2one('link_building.link_building', string='Link Building', required= True)
-    
+
+    @api.onchange('client_id')
+    def _load_seccions(self):
+        seccions=self.env['posik_client.informe_subseccion'].search([])
+        self.seccion_ids= seccions
+
     @api.onchange('client_id')
     def _on_change_client_id(self):
         for t in self.activity_url:
@@ -50,4 +57,5 @@ class PosikReport(models.Model):
                         self.activity_url= [(4,t.id)]
                     else:
                         self.activity_no_url= [(4,t.id)]
-            
+                self.all_activity= [(4,t.id)]
+                

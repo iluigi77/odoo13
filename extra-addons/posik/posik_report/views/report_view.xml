@@ -1,5 +1,7 @@
 <odoo>
     <data>
+
+
         <record id="posik_report_posik_report_form" model="ir.ui.view">
             <field name="name">posik_report.posik_report.form</field>
             <field name="model">posik_report.posik_report</field>
@@ -16,24 +18,32 @@
                             <field name="informe_text_client"/>
                             <hr/>
                         </group>
-                        <group name="seccions" string='ANALÍTICA WEB Y SEGUIMIENTO'>
-                            <group name="left">
-                                <field name="activity_url" mode='tree'>
-                                    <tree>
-                                        <field name='name'/>
-                                        <field name='url'/>
-                                    </tree>
-                                </field>
-                            </group>
-                            <group name="rigth">
-                                <field name="activity_no_url" mode='tree'>
-                                    <tree>
-                                        <field name='name'/>
-                                    </tree>
-                                </field>
-                            </group>
 
+                        <group name="left">
+                            <field name="all_activity" mode='tree' widget = "many2one_list" context = "{'group_by': 'project_id'}"/>
                         </group>
+
+                        <group name="seccions" string='ANALÍTICA WEB Y SEGUIMIENTO'>
+                            <field name="activity_url" mode='tree'>
+                                <tree>
+                                    <field name='name'/>
+                                    <field name='url'/>
+                                </tree>
+                            </field>
+                            <field name="activity_no_url" mode='tree'>
+                                <tree>
+                                    <field name='name'/>
+                                </tree>
+                            </field>
+                        </group>
+                        <!-- <group>
+                            <field name="seccion_ids" mode='tree'>
+                                <tree  context = "{'group_by': 'parent_seccion_id'}">
+                                    <field name='name'/>
+                                </tree>
+                            </field>
+                        </group> -->
+
 
                     </sheet>
                 </form>

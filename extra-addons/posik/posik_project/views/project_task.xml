@@ -5,18 +5,107 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='timesheet_ids']//tree//field[@name='employee_id']" position="after">
-                    <field name='client_id' 
-                        class="o_task_user_field"
-                        options='{"no_open": True}'/>
-                    <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                    <field name='url'/>
-                    <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                    <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                
-                </xpath>
-                <xpath expr="//field[@name='timesheet_ids']//tree//field[@name='unit_amount']" position="before">
-                    <field name='pic_activity'/>
+                <xpath expr="//field[@name='timesheet_ids']" position="replace">
+                    <page string="Partes de Horas" id="timesheets_tab" attrs="{'invisible': [('allow_timesheets', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="short_timesheet_hours" widget="float_time"/>
+                                    <label for="subtask_planned_hours" groups="project.group_subtask_project" attrs="{'invisible': [('subtask_count', '=', 0)]}"/>
+                                    <div class="o_row" groups="project.group_subtask_project" attrs="{'invisible': [('subtask_count', '=', 0)]}">
+                                        <field name="subtask_planned_hours" widget="float_time"/><span> planned hours</span>
+                                    </div>
+                            </group>
+                           
+                        </group>
+                       
+                        <field 
+                            name="timesheet_ids" 
+                            mode="tree,kanban" 
+                            attrs="{'invisible': [('analytic_account_active', '=', False)]}" 
+                            context="{'default_project_id': project_id, 'default_client_id': client_id, 'default_name':''}"
+                            >
+                            <tree 
+                                editable="bottom" 
+                                string="Timesheet Activities" 
+                                default_order="date, short_timesheet"
+                                decoration-warning="short_timesheet == True"
+                                >
+                                <field name="date"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+
+                                <field name='client_id' class="o_task_user_field" options='{"no_open": True}' readonly='1'/>
+                                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='url'/>
+                                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                    
+                                <field name="name"/>
+
+                                <!-- <field name='pic_activity'/> -->
+                                <field name='short_timesheet'/> 
+
+                                <field name="unit_amount" widget="timesheet_uom"/>
+                                <field name="project_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                            </tree>
+                            <kanban class="o_kanban_mobile">
+                                <field name="date"/>
+                                <field name="user_id"/>
+                                <field name="employee_id"/>
+                                <field name="name"/>
+                                <field name="unit_amount"/>
+                                <field name="project_id"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong><span><t t-esc="record.employee_id.value"/></span></strong>
+                                                </div>
+                                                <div class="col-6 pull-right text-right">
+                                                    <strong><t t-esc="record.date.value"/></strong>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 text-muted">
+                                                    <span><t t-esc="record.name.value"/></span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <span class="pull-right text-right">
+                                                        <field name="unit_amount" widget="float_time"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form  string="Timesheet Activities">
+                                <sheet>
+                                    <group>
+                                        <field name="date"/>
+                                        <field name="user_id" invisible="1"/>
+                                        <field name="employee_id" required="1"/>
+                                        <field name="name"/>
+                                        <field name="unit_amount" string="Duration" widget="float_time"/>
+                                        <field name="project_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                        <group attrs="{'invisible': [('analytic_account_active', '=', False)]}">
+                            <group class="oe_subtotal_footer oe_right" name="project_hours">
+                                <field name="effective_hours" widget="float_time" />
+                                <field name="subtask_effective_hours" widget="float_time" attrs="{'invisible' : [('subtask_effective_hours', '=', 0.0)]}" />
+                                <field name="total_hours_spent" widget="float_time" class="oe_subtotal_footer_separator" attrs="{'invisible' : [('subtask_effective_hours', '=', 0.0)]}" />
+                                <field name="remaining_hours" widget="float_time" class="oe_subtotal_footer_separator" attrs="{'invisible' : [('planned_hours', '=', 0.0)]}"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    
                 </xpath>
 
                 <xpath expr="//form//sheet//group[1]//group[1]//field[@name='user_id']" position="after">
@@ -24,7 +113,6 @@
                         class="o_task_user_field"
                         options='{"no_open": True}'/>
                 </xpath>
-
 
             </field>
         </record>
