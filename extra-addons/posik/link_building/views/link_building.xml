@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <record id="link_building_link_building_form" model="ir.ui.view">
+            <field name="name">link_building.link_building.form</field>
+            <field name="model">link_building.link_building</field>
+            <field name="arch" type="xml">
+                <form string="Sitios Web">
+                    <sheet>
+                        <group name="main">
+                            <group name="right">
+                                <field name="date_create" />
+                                <field name="month_informe" />
+                                <field name="client_id" />
+                                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='task' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                            </group>
+                            <group name="left">
+                                <field name="hours" widget="float_time"/>
+                                <field name="link_price" />
+                                <field name="provider" />
+                                <field name="email" widget="email"/>
+                                <field name="user" />
+                                <field name="password" password="True" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="link_building_link_building_tree" model="ir.ui.view">
+            <field name="name">link_building.link_building.tree</field>
+            <field name="model">link_building.link_building</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date_create" />
+                    <field name="month_informe" />
+                    <field name="client_id" />
+                    <field name='web_client'  options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                    <field name="hours" widget="float_time"/>
+                    <field name="link_price" />
+                    <field name="provider" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="link_building_link_building_search" model="ir.ui.view">
+            <field name="name">link_building.link_building.search</field>
+            <field name="model">link_building.link_building</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="date_create" />
+                    <field name="month_informe" />
+                    <field name="client_id" />
+                    <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                    <field name="hours" widget="float_time"/>
+                    <field name="link_price" />
+                    <field name="provider" />
+                </search>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_link_building">
+            <field name="name">Link Building</field>
+            <field name="res_model">link_building.link_building</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Link Building" id="link_building_menu_root" action="action_link_building" sequence="6" />
+    
+    </data>
+</odoo>

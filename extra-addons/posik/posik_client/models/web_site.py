@@ -10,7 +10,7 @@ class WebSite(models.Model):
 
     web = fields.Char(string= 'Sitio Web', required= True)
     url = fields.Char(string= 'URL', required= True)
-    logo = fields.Binary(string="Logotipo", required= True)
+    logo = fields.Binary(string="Logotipo")
 
     client_id = fields.Many2one('res.partner', string='Clientes', readonly= True)
 

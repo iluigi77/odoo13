@@ -24,7 +24,7 @@
             </field>
         </record>
 
-      <record id="posik_client_informe_seccion_form" model="ir.ui.view">
+        <record id="posik_client_informe_seccion_form" model="ir.ui.view">
             <field name="name">posik_client.informe_seccion.form</field>
             <field name="model">posik_client.informe_seccion</field>
             <field name="arch" type="xml">
@@ -66,6 +66,16 @@
                 </search>
             </field>
         </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_informe_seccion">
+            <field name="name">Secciones de Informes</field>
+            <field name="res_model">posik_client.informe_seccion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Secciones de Informes" id="informe_seccion_menu_root" action="action_informe_seccion" sequence="5" />
+      
 
     </data>
 </odoo>

@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'posik_project', 'posik_client'],
+    'depends': ['base', 'posik_project', 'posik_client', 'link_building'],
 
     # always loaded
     'data': [
