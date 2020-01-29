@@ -34,7 +34,7 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="employee_id" required="1"/>
 
-                                <field name='client_id' class="o_task_user_field" options='{"no_open": True}' readonly='1'/>
+                                <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
                                 <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
                                 <field name='url'/>
                                 <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
@@ -42,7 +42,7 @@
                                     
                                 <field name="name"/>
 
-                                <!-- <field name='pic_activity'/> -->
+                                <field name='pic_activity'/>
                                 <field name='short_timesheet'/> 
 
                                 <field name="unit_amount" widget="timesheet_uom"/>

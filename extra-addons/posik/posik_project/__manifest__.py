@@ -26,6 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/project_task.xml',
+        # 'views/hr_timesheet_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -3,9 +3,9 @@
         <record model="ir.actions.act_window" id="action_report_posik_report">
             <field name="name">Reportes de Tareas</field>
             <field name="res_model">posik_report.posik_report</field>
-            <field name="view_mode">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
-        <menuitem id="seting_menu_root" name="Reportes" sequence="30"  action="action_report_posik_report"/> 
+        <menuitem id="reports_menu_root" name="Reportes" sequence="30"  action="action_report_posik_report"/> 
     
     </data>
 </odoo>

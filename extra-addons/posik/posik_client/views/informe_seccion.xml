@@ -9,6 +9,7 @@
                     <sheet>
                         <group name="main">
                             <field name="name" />
+                            <field name="description" />
                         </group>
                     </sheet>
                 </form>

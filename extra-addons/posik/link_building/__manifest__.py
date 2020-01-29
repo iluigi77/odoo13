@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/link_building.xml',
+        'views/timesheet.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

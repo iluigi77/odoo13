@@ -3,59 +3,84 @@
 from odoo import models, fields, api
 import datetime
 
+def get_month(argument):
+    switcher = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre"
+    }
+    return switcher.get(argument, "Mes inválido")
+
 class PosikReport(models.Model):
     _name = 'posik_report.posik_report'
     _description = 'posik_report.posik_report'
 
-    def _default_tittle(self):
-        text= "Informe de trabajos Mto. Web y Marketing Digital  "
+    def _get_month(self):
         date= datetime.datetime.today()
-        mmyyyy = date.strftime("%m/%Y")
-        return text+mmyyyy
-    
-    @api.depends('client_id')
-    def _default_text(self):
-        if self.client_id:
-            text= ''
-            dt= self.env['res.partner'].search([('id', '=', self.client_id)], limit= 1)
-            if dt:
-                text= dt[0].informe_text
-            return text
+        yyyy = date.strftime("%Y")
+        month_name= get_month(date.month)
+        return month_name +' '+ yyyy
 
-    tittle= fields.Text(string='Título', default= _default_tittle, readonly='1')
+    date_name= fields.Char(string='Mes y Año', default=_get_month, readonly="1")
+    tittle= fields.Text(string='Título', 
+        default= lambda self: "Informe de trabajos Mto. Web y Marketing Digital  " + self._get_month(), 
+        readonly='1')
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
     name_client = fields.Char(string='Nombre del Cliente', compute='_on_change_client_id', readonly="1")
-    informe_text_client = fields.Text(string="Texto Inicio de Informes", required= True)
-    all_activity = fields.Many2many('account.analytic.line', string='Todas las tareas', compute= '_on_change_client_id', readonly='1')
+    informe_text_client = fields.Text(string="Texto Inicio de Informes")
+    
     activity_url = fields.Many2many('account.analytic.line', string='Tareas con URL', compute= '_on_change_client_id', readonly='1')
-    activity_no_url = fields.Many2many('account.analytic.line', string='Tareas sin URL', compute= '_on_change_client_id', readonly='1')
-    seccion_ids = fields.Many2many('posik_client.informe_subseccion', string='Secciones', compute= '_load_seccions', readonly='1')
-    # link_building = fields.Many2one('link_building.link_building', string='Link Building', required= True)
+    # activity_no_url = fields.Many2many('account.analytic.line', string='Tareas sin URL', compute= '_on_change_client_id', readonly='1')
+
+    seccion_ids = fields.Many2many('posik_client.informe_seccion', string='Secciones', compute= '_load_seccions', readonly='1')
+    web_client_ids = fields.Many2many('posik_client.web_site', string='Sitios Web', compute= '_load_web_clients', readonly='1')
 
     @api.onchange('client_id')
     def _load_seccions(self):
-        seccions=self.env['posik_client.informe_subseccion'].search([])
+        seccions=self.env['posik_client.informe_seccion'].search([])
         self.seccion_ids= seccions
 
     @api.onchange('client_id')
-    def _on_change_client_id(self):
-        for t in self.activity_url:
-            self.activity_url= [(3,t.id.origin)]
-        for t in self.activity_no_url:
-            self.activity_no_url= [(3,t.id.origin)]
-
+    def _load_web_clients(self):
+        webs_client=[]
         if self.client_id:
-            # client info
-            self.name_client= self.client_id.name
-            self.informe_text_client= self.client_id.informe_text
+            webs_client=self.env['posik_client.web_site'].search([('client_id', '=', self.client_id.id)])
+            self.web_client_ids= webs_client
 
-            # task
-            dd= datetime.datetime.today()
-            for t in self.client_id.activity_id:
-                if t.date.month == dd.month and t.date.year == dd.year:
-                    if t.url:
-                        self.activity_url= [(4,t.id)]
-                    else:
-                        self.activity_no_url= [(4,t.id)]
-                self.all_activity= [(4,t.id)]
+    @api.onchange('client_id')
+    def _on_change_client_id(self):
+        for report in self:
+            text= report.client_id.informe_text if report.client_id else ''
+            report.informe_text_client= text
+
+            for t in report.activity_url:
+                report.activity_url= [(3,t.id.origin)]
+            # for t in report.activity_no_url:
+            #     report.activity_no_url= [(3,t.id.origin)]
+
+            if report.client_id:
+                # client info
+                report.name_client= report.client_id.name
+                report.informe_text_client= report.client_id.informe_text
+
+                # task
+                dd= datetime.datetime.today()
+                activities= [(4,t.id) for t in report.client_id.activity_id if t.date.month == dd.month and t.date.year == dd.year]
+                report.activity_url= activities
+                # for t in report.client_id.activity_id:
+                #     if t.date.month == dd.month and t.date.year == dd.year:
+                        # report.activity_url= [(4,t.id) ]
+                        # if t.url:
+                        #     report.activity_url= [(4,t.id)]
+                        # else:
+                        #     report.activity_no_url= [(4,t.id)]
                 

@@ -20,13 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'posik_project', 'posik_client', 'link_building'],
+    'depends': ['base', 'web', 'posik_project', 'posik_client', 'link_building'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/report_view.xml',
         'views/setting.xml',
+        'views/report_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

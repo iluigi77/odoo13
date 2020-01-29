@@ -31,6 +31,7 @@ class posik_project(models.Model):
 
 class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
+    _order = 'pic_activity'
 
     def _get_today(self):
         return datetime.datetime.now()

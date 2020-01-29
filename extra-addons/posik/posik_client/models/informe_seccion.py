@@ -9,6 +9,7 @@ class InformeSubSeccion(models.Model):
     _description = 'Informe Subseccions'
 
     name = fields.Char(string= 'Título de la Subsección', required= True)
+    description = fields.Char(string= 'Texto Descriptivo')
 
     parent_seccion_id = fields.Many2one('posik_client.informe_seccion', string="Sección padre", relation='posik_informe_seccion_subseccion')
 

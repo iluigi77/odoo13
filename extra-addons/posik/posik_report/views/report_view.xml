@@ -1,7 +1,5 @@
 <odoo>
     <data>
-
-
         <record id="posik_report_posik_report_form" model="ir.ui.view">
             <field name="name">posik_report.posik_report.form</field>
             <field name="model">posik_report.posik_report</field>
@@ -13,14 +11,12 @@
                         </group>
                         <group name="tittle">
                             <field name="tittle" />
+                            <field name="date_name" />
+                            <br/>
                             <field name="client_id" />
                             <field name="name_client" readonly="1"/>
                             <field name="informe_text_client"/>
                             <hr/>
-                        </group>
-
-                        <group name="left">
-                            <field name="all_activity" mode='tree' widget = "many2one_list" context = "{'group_by': 'project_id'}"/>
                         </group>
 
                         <group name="seccions" string='ANALÍTICA WEB Y SEGUIMIENTO'>
@@ -30,48 +26,38 @@
                                     <field name='url'/>
                                 </tree>
                             </field>
-                            <field name="activity_no_url" mode='tree'>
+                            <!-- <field name="activity_no_url" mode='tree'>
                                 <tree>
                                     <field name='name'/>
                                 </tree>
-                            </field>
+                            </field> -->
                         </group>
-                        <!-- <group>
-                            <field name="seccion_ids" mode='tree'>
-                                <tree  context = "{'group_by': 'parent_seccion_id'}">
-                                    <field name='name'/>
-                                </tree>
-                            </field>
-                        </group> -->
-
 
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <!-- <record id="posik_report_posik_report_tree" model="ir.ui.view">
+        <record id="posik_report_posik_report_tree" model="ir.ui.view">
             <field name="name">posik_report.posik_report.tree</field>
             <field name="model">posik_report.posik_report</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="tittle" />
-                    <field name="description" />
-                    <field name="note" />
+                    <field name="name_client" />
                 </tree>
             </field>
-        </record> -->
+        </record>
 
-        <!-- <record id="posik_report_posik_report_search" model="ir.ui.view">
+        <record id="posik_report_posik_report_search" model="ir.ui.view">
             <field name="name">posik_report.posik_report.search</field>
             <field name="model">posik_report.posik_report</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="tittle" />
-                    <field name="description" />
-                    <field name="note" />
+                    <field name="name_client" />
                 </search>
             </field>
-        </record> -->
+        </record>
     </data>
 </odoo>
