@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <record id="link_building_link_building_form" model="ir.ui.view">
+        <!-- <record id="link_building_link_building_form" model="ir.ui.view">
             <field name="name">link_building.link_building.form</field>
             <field name="model">link_building.link_building</field>
             <field name="arch" type="xml">
@@ -22,7 +22,6 @@
                                 <field name="password" password="True" />
                             </group>
                         </group>
-                        <!-- <group> -->
                         <notebook>
                             <page string='Distribución de Horas'>
                                 <group>
@@ -37,7 +36,6 @@
                                     <tree editable="bottom" string="Distribución de Horas" default_order="date">
                                         <field name="date"/>
                                         <field name="user_id" />
-                                        <!-- <field name="employee_id" required="1"/> -->
                                         <field name="hours" widget="float_time"/>
                                     </tree>
                                 </field>
@@ -48,29 +46,37 @@
                                 </group>
                             </page>
                         </notebook>
-                        <!-- </group> -->
                     </sheet>
                 </form>
             </field>
-        </record>
+        </record> -->
 
         <record id="link_building_link_building_tree" model="ir.ui.view">
             <field name="name">link_building.link_building.tree</field>
             <field name="model">link_building.link_building</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="date_create" />
+                <tree editable="bottom">
+                    <field name="date_create" widget='date' />
+                    <field name="hour_create" widget="float_time"/>
+                    <field name="date_informe" />
                     <field name="month_informe" />
                     <field name="client_id" />
-                    <field name='web_client'  options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                    <field name="hours" widget="float_time"/>
-                    <field name="link_price" />
+                    <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
                     <field name="provider" />
+                    <field name="anchor" />
+                    <field name="seccion" />
+                    <field name="portal" />
+                    <field name="email" widget="email"/>
+                    <field name="user" />
+                    <field name="password" password="True" />
+                    <field name="external_hours" widget="float_time"/>
+                    <field name="total_timesheet_hours" widget="float_time"/>
+                    <field name="link_price" />
                 </tree>
             </field>
         </record>
 
-        <record id="link_building_link_building_search" model="ir.ui.view">
+        <!-- <record id="link_building_link_building_search" model="ir.ui.view">
             <field name="name">link_building.link_building.search</field>
             <field name="model">link_building.link_building</field>
             <field name="arch" type="xml">
@@ -84,16 +90,16 @@
                     <field name="provider" />
                 </search>
             </field>
-        </record>
+        </record> -->
 
 
 
         <record model="ir.actions.act_window" id="action_link_building">
             <field name="name">Link Building</field>
             <field name="res_model">link_building.link_building</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree</field>
         </record>
-        <menuitem name="Link Building" id="link_building_menu_root" action="action_link_building" sequence="6" />
+        <menuitem name="Link Building" id="link_building_menu_root" action="action_link_building" sequence="101" />
     
     </data>
 </odoo>

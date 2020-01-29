@@ -16,6 +16,11 @@
 </tree>
 ~~~
 
+### boton en un field del treeview
+~~~
+<button type="object" icon="gtk-delete" name="unlink"/>
+~~~
+
 ### Quitar botones de crear , editar o abrir modal en los campos de una vista
 ~~~
 <field name="code" options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
@@ -175,13 +180,13 @@ def _amount_all(self):
         })
 ~~~
 
-
 ### Default order
 ~~~
 class NameClass(....):
     _inherit = "name.class"
     _order = "custom_field_name, other_field ..." (you can add option asc or desc too)
 ~~~
+
 # mientras
 
 ~~~

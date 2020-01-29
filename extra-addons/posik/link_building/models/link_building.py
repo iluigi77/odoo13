@@ -3,30 +3,64 @@
 from odoo import models, fields, api
 import datetime
 
+def get_month(argument):
+    switcher = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre"
+    }
+    return switcher.get(argument, "Mes inválido")
 class link_building(models.Model):
     _name = 'link_building.link_building'
     _description = 'link_building.link_building'
 
     def _get_today(self):
-        return datetime.datetime.today()
+        return datetime.datetime.now()
 
-    date_create = fields.Date(string='Fecha de creación', required= True, default = _get_today, readonly= '1')
-    month_informe = fields.Date(string='Mes de informe', required= True)
+    def _get_hour(self):
+        now= datetime.datetime.now()
+        h_to_m= now.hour * 60
+        minutes= h_to_m + now.minute
+        return minutes/60 if minutes>0 else 0
+
+    date_create = fields.Datetime(string='Fecha de creación', required= True, default = _get_today, readonly= '1')
+    hour_create = fields.Float(string='Hora Creación', default=_get_hour)
+    date_informe = fields.Date(string='Fecha de informe', required= True, default=_get_today)
+    month_informe = fields.Char(string='Mes de informe', required= True, compute='_onchange_date_informe')
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
     web_client = fields.Many2one('posik_client.web_site', string='Sitio Web', domain="[('client_id', '=', client_id)]" )
     url = fields.Char('Url Resultante')
-    hours = fields.Float(string='Horas Externas', default= 1.5)
+    external_hours = fields.Float(string='Horas Externas', default= 1.5)
     link_price = fields.Float('Precio de Enlace', digits='Product Price')
     provider = fields.Char('Proveedor')
+    anchor = fields.Char('Anchor')
+    seccion = fields.Char('Sección')
+    portal = fields.Char('Portal')
     email = fields.Char('email')
     user = fields.Char('Usuario')
     password = fields.Char('password')
+    total_timesheet_hours = fields.Float(string="Total de Horas Internas", default= 0)
 
-    timesheets_ids= fields.One2many('link_building.timesheet', 'link_building_id', string="Distribución de Horas")
-    timesheet_hours = fields.Float(string="Horas Invertidas")
-    total_timesheet_hours = fields.Float(string="Total de Horas Internas", default= 0, compute='_onchange_timesheets_ids')
+    # timesheets_ids= fields.One2many('link_building.timesheet', 'link_building_id', string="Distribución de Horas")
+    # timesheet_hours = fields.Float(string="Horas Invertidas")
+    # total_timesheet_hours = fields.Float(string="Total de Horas Internas", default= 0, compute='_onchange_timesheets_ids')
 
-    @api.onchange('timesheets_ids')
+    @api.onchange('date_informe')
+    def _onchange_date_informe(self):
+        if self.date_informe:
+            month= get_month(self.date_informe.month)
+            self.month_informe= month + ' '+str(self.date_informe.year)
+    
+    """ @api.onchange('timesheets_ids')
     def _onchange_timesheets_ids(self):
         total= 0
         for t in self.timesheets_ids:
@@ -39,18 +73,8 @@ class link_building(models.Model):
                 'user_id': self.env.uid,
                 'hours': self.timesheet_hours
             })]
-        self.timesheet_hours= 0
+        self.timesheet_hours= 0 """
     
-
-    """ month= fields.Integer('Mes', compute= '_get_month_informe', store= True)
-    year= fields.Integer('Año', compute= '_get_month_informe', store= True)
-
-    @api.onchange('month_informe')
-    def _get_month_informe(self):
-        if self.month_informe:
-            self.month= int(self.month_informe.month)
-            self.year= int(self.month_informe.year) """
-
     @api.onchange('client_id')
     def _onchange_client_id(self):
         self.web_client= None
