@@ -11,6 +11,7 @@
                             <field name="name" />
                             <field name="description" />
                         </group>
+                        
                     </sheet>
                 </form>
             </field>
@@ -36,6 +37,11 @@
                                 <field name="name" />
                                 <field name="description" />
                                 <field name="note" />
+                            </group>
+                            <group name="options">
+                                <field name="link_building" />
+                                <field name="sem" />
+                                <field name="social_network" />
                             </group>
                             <field name="subseccion_id" />
                         </group>

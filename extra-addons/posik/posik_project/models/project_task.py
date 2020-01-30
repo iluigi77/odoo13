@@ -7,7 +7,6 @@ class posik_project(models.Model):
     _inherit = 'project.task'
 
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
-    timesheet_no_time_ids = fields.One2many('account.analytic.line', 'task_id', string= 'Partes de tiempo cortas')
     short_timesheet_hours = fields.Float(string="Horas en partes cortas")
 
     @api.onchange('short_timesheet_hours','timesheet_ids')

@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="posik_client_advertising_investment_tree" model="ir.ui.view">
+            <field name="name">posik_client.advertising_investment.tree</field>
+            <field name="model">posik_client.advertising_investment</field>
+            <field name="arch" type="xml">
+                <tree
+                    editable="bottom"
+                    >
+                    <field name="provider_id"/>
+                    <field name="client_id" invisible='1' />
+                    <field name="web_client"/>
+                    <field name="importe"/>
+                    <field name="date_informe"/>
+                    <field name="month_informe"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

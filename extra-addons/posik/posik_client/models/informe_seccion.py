@@ -20,5 +20,8 @@ class InformeSeccion(models.Model):
     name = fields.Char(string= 'Título de Sección', required= True)
     description = fields.Char(string= 'Texto Descriptivo')
     note = fields.Text(string="Nota de la Sección")
+    link_building = fields.Boolean(string="Es Link Building?", default= False)
+    sem = fields.Boolean(string="Es SEM?", default= False)
+    social_network = fields.Boolean(string="Gestión de Redes Sociales?", default= False)
 
     subseccion_id = fields.One2many('posik_client.informe_subseccion', 'parent_seccion_id', string="Subsecciones", relation='smc_subseccion_informe_seccion')

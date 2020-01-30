@@ -28,6 +28,7 @@
         'views/web_site.xml',
         'views/social_network.xml',
         'views/informe_seccion.xml',
+        'views/advertising_investment.xml',
         'views/setting.xml',
         'views/res_partner.xml',
     ],

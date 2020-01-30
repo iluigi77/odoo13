@@ -19,6 +19,7 @@ def get_month(argument):
         12: "Diciembre"
     }
     return switcher.get(argument, "Mes inválido")
+    
 class link_building(models.Model):
     _name = 'link_building.link_building'
     _description = 'link_building.link_building'

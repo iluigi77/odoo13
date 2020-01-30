@@ -6,11 +6,6 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
-                <!-- <xpath expr="//form//sheet//field[@name='image_1920']" position="before"> -->
-                    <!-- <field name="logo" /> -->
-                    <!-- <field name="logo" widget='image' class="oe_avatar" options='{"preview_image": "image_128"}'/> -->
-                <!-- </xpath> -->
-
                 <xpath expr="//form//sheet//group[1]" position="after">
                     <group string='Informes'>
                         <field name="informe_text" />
@@ -20,13 +15,47 @@
                             <field name="web_site" />
                         </group>
                         <group string='Redes Sociales'>
-                            <field name="social_network"  options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                            <field name="my_social_network"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page  string='Inversión en Publicidad'>
+                            <group>
+                                <field 
+                                    name="advertising_investment_ids"
+                                    context="{'default_client_id': id}"
+                                    >
+                                    <tree
+                                        editable="bottom"
+                                        >
+                                        <field name="provider_id"/>
+                                        <field name="client_id" />
+                                        <field name="web_client" invisible='1'/>
+                                        <field name="importe"/>
+                                        <field name="date_informe"/>
+                                        <field name="month_informe"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
                 </xpath>
             </field>
         </record>
       
+        <record id="posik_client_provider_form" model="ir.ui.view">
+            <field name="name">posik_client.provider.form</field>
+            <field name="model">posik_client.provider</field>
+            <field name="arch" type="xml">
+                <form string="Proveedores">
+                    <sheet>
+                        <group name="main" >
+                            <field name="name" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
     
     </data>
 </odoo>

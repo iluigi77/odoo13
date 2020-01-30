@@ -10,28 +10,48 @@
                         
                         </group>
                         <group name="tittle">
-                            <field name="tittle" />
-                            <field name="date_name" />
-                            <br/>
-                            <field name="client_id" />
-                            <field name="name_client" readonly="1"/>
-                            <field name="informe_text_client"/>
-                            <hr/>
+                            <group >
+                                <field name="tittle" />
+                                <field name="date_name" />
+                            </group>
+                            <group >
+                                <field name="client_id" />
+                                <field name="name_client" readonly="1"/>
+                                <field name="informe_text_client"/>
+                            </group>
                         </group>
+                        <hr/>
 
-                        <group name="seccions" string='ANALÍTICA WEB Y SEGUIMIENTO'>
-                            <field name="activity_url" mode='tree'>
-                                <tree>
-                                    <field name='name'/>
-                                    <field name='url'/>
-                                </tree>
-                            </field>
-                            <!-- <field name="activity_no_url" mode='tree'>
-                                <tree>
-                                    <field name='name'/>
-                                </tree>
-                            </field> -->
-                        </group>
+                        <notebook>
+                            <page string='Actividades'>
+                                <field name="activity_url" mode='tree'>
+                                    <tree>
+                                        <field name='name'/>
+                                        <field name='seccion_id'/>
+                                        <field name='subseccion_id'/>
+                                        <field name='url'/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Link Building'>
+                                <field name="link_building_id" />
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Inversión en Publicidad'>
+                                <field name="advertising_investment_ids">
+                                    <tree>
+                                        <field name="provider_id"/>
+                                        <field name="client_id" invisible='1' />
+                                        <field name="web_client"/>
+                                        <field name="importe"/>
+                                        <field name="date_informe"/>
+                                        <field name="month_informe"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                        </notebook>
 
                     </sheet>
                 </form>

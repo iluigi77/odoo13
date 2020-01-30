@@ -1,16 +1,61 @@
 <odoo>
     <data>
+        <record id="posik_client_my_social_network_form" model="ir.ui.view">
+            <field name="name">posik_client.my_social_network.form</field>
+            <field name="model">posik_client.my_social_network</field>
+            <field name="arch" type="xml">
+                <form string="Redes Sociales">
+                    <sheet>
+                        <group name="main" string="Mis Redes Sociales">
+                            <group name="right">
+                                <field name="name" />
+                                <field name="social_network_id" />
+                                <field name="url" />
+                                <field name="logo" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="posik_client_my_social_network_tree" model="ir.ui.view">
+            <field name="name">posik_client.my_social_network.tree</field>
+            <field name="model">posik_client.my_social_network</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="social_network_id" />
+                    <field name="url" />
+                    <field name="logo" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="posik_client_my_social_network_search" model="ir.ui.view">
+            <field name="name">posik_client.my_social_network.search</field>
+            <field name="model">posik_client.my_social_network</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="social_network_id" />
+                    <field name="url" />
+                    <field name="logo" />
+                </search>
+            </field>
+        </record>
+
+
         <record id="posik_client_social_network_form" model="ir.ui.view">
             <field name="name">posik_client.social_network.form</field>
             <field name="model">posik_client.social_network</field>
             <field name="arch" type="xml">
-                <form string="Currency Master">
+                <form string="Redes Sociales">
                     <sheet>
-                        <group name="main" string="Crear Denominación de Moneda">
+                        <group name="main" string="Redes Sociales">
                             <group name="right">
-                            <field name="web" />
+                                <field name="web" />
                                 <field name="url" />
-                                <field name="logo" />
                             </group>
                         </group>
                     </sheet>
