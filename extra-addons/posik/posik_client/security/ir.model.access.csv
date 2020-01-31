@@ -7,3 +7,4 @@ access_posik_client_default_setting,posik_client.default_setting,model_posik_cli
 access_posik_client_my_social_network,posik_client.my_social_network,model_posik_client_my_social_network,base.group_user,1,1,1,1
 access_posik_client_advertising_investment,posik_client.advertising_investment,model_posik_client_advertising_investment,base.group_user,1,1,1,1
 access_posik_client_provider,posik_client.provider,model_posik_client_provider,base.group_user,1,1,1,1
+access_posik_client_hour_price,posik_client.hour_price,model_posik_client_hour_price,base.group_user,1,1,1,1

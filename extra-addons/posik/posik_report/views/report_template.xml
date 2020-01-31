@@ -24,7 +24,8 @@
                                 ]]>
                             </style>
 
-                            <div id='container' class="container" style="font-family: Arvo;">
+                            <div id='container' class="container">
+                            <!-- <div id='container' class="container" style="font-family: Arvo;"> -->
                                 <h4 class="mt16 text-center" style="color: #1c1c1b; font-size: 17px"> Informe de trabajos Mto. Web y Marketing Digital </h4>
                                 <h4 class="mt16 text-center" style="color: #575756; font-size: 17px" t-field="doc.date_name"/>
                                 <br/>
@@ -150,10 +151,10 @@
                                             <!-- Secciones especiales -->
                                             <t t-if="seccion.link_building">
                                                 <h5 style="color: #1d70b7; font-size: 12px"> <span>Link Building</span> </h5>
-                                                <t t-foreach='doc.link_building_id' t-as='link_building'>
+                                                <t t-foreach='doc.link_building_ids' t-as='link_building'>
                                                     <p style="color: #575756; font-size: 9px">
                                                         <span>Enlace </span>
-                                                        <t t-if="len(doc.link_building_id) > 1">
+                                                        <t t-if="len(doc.link_building_ids) > 1">
                                                             <span>a la web </span> <span t-esc="link_building.web_client" ></span>
                                                         </t>
                                                         <t t-if="link_building.seccion">
@@ -174,44 +175,58 @@
                                                 <t t-if="len(doc.client_id.my_social_network) == 0">
                                                     <p style="color: #575756; font-size: 9px"> <span>Servicio no contratado</span> </p>
                                                 </t>
-                                                <t t-foreach='doc.client_id.my_social_network' t-as='my_social_network'>
-                                                    <p style="color: #575756; font-size: 9px">
-                                                    </p>
+                                                <t t-else='' >
+                                                    <table class="table table-sm o_main_table border_posik">
+                                                        <!-- <thead>
+                                                            <tr>
+                                                                <th style="border: 1px solid black;" name="th_description" class="border_posik text-left">Descripción de la tarea</th>
+                                                                <th style="border: 1px solid black;" name="th_quantity" class="border_posik text-left">Link</th>
+                                                                <th style="border: 1px solid black;" name="th_img" class="border_posik text-right"> </th>
+                                                            </tr>
+                                                        </thead> -->
+                                                        <tbody class="sale_tbody">
+                                                            <t t-foreach="doc.client_id.my_social_network" t-as="line">
+                                                                <tr>
+                                                                    <td name="td_name_task" class="text-left">
+                                                                        <span style="color: #575756; font-size: 9px" t-field="line.name"/>
+                                                                    </td>
+                                                                    <td name="td_red_task" class="text-left">
+                                                                        <span style="color: #575756; font-size: 9px" t-field="line.social_network_id"/>
+                                                                    </td>
+                                                                    <td name="td_url_task" class="text-left">
+                                                                        <span style="color: #575756; font-size: 9px" t-field="line.url"/>
+                                                                    </td>
+                                                                    <td name="td_pic_task" class="text-right">
+                                                                        <t t-if="line.logo">
+                                                                            <img t-att-src='image_data_uri(line.logo)' height="50px" style="margin:9px"/>
+                                                                        </t>
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </tbody>
+                                                    </table>
                                                 </t>
 
+                                            </t>
+                                            <t t-if="seccion.sem">
+                                                <h5 style="color: #1d70b7; font-size: 12px"> <span>Tabla de precios</span> </h5>
                                                 <table class="table table-sm o_main_table border_posik">
-                                                    <!-- <thead>
-                                                        <tr>
-                                                            <th style="border: 1px solid black;" name="th_description" class="border_posik text-left">Descripción de la tarea</th>
-                                                            <th style="border: 1px solid black;" name="th_quantity" class="border_posik text-left">Link</th>
-                                                            <th style="border: 1px solid black;" name="th_img" class="border_posik text-right"> </th>
-                                                        </tr>
-                                                    </thead> -->
                                                     <tbody class="sale_tbody">
-                                                        <t t-foreach="doc.client_id.my_social_network" t-as="line">
+                                                        <t t-foreach="doc.advertising_investment_ids" t-as="line">
                                                             <tr>
                                                                 <td name="td_name_task" class="text-left">
-                                                                    <span style="color: #575756; font-size: 9px" t-field="line.name"/>
+                                                                    <span style="color: #575756; font-size: 9px" t-field="line.provider_id"/>
                                                                 </td>
                                                                 <td name="td_red_task" class="text-left">
-                                                                    <span style="color: #575756; font-size: 9px" t-field="line.social_network_id"/>
+                                                                    <span style="color: #575756; font-size: 9px" t-field="line.web_client"/>
                                                                 </td>
                                                                 <td name="td_url_task" class="text-left">
-                                                                    <span style="color: #575756; font-size: 9px" t-field="line.url"/>
-                                                                </td>
-                                                                <td name="td_pic_task" class="text-right">
-                                                                    <t t-if="line.logo">
-                                                                        <img t-att-src='image_data_uri(line.logo)' height="50px" style="margin:9px"/>
-                                                                    </t>
+                                                                    <span style="color: #575756; font-size: 9px" t-field="line.importe"/>
                                                                 </td>
                                                             </tr>
                                                         </t>
                                                     </tbody>
                                                 </table>
-                                            </t>
-                                            <t t-if="seccion.sem">
-                                                <h5 style="color: #1d70b7; font-size: 12px"> <span>Tabla de precios</span> </h5>
-
                                             </t>
                                         
                                             <t t-set="index" t-value="index+1"/>

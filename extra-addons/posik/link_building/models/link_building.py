@@ -80,3 +80,6 @@ class link_building(models.Model):
     def _onchange_client_id(self):
         self.web_client= None
     
+class ResPartner(models.Model):
+    _inherit ='res.partner'
+    link_building_ids = fields.One2many('link_building.link_building', 'client_id', string = 'Link Building')

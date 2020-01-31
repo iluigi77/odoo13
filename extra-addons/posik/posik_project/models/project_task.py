@@ -56,3 +56,4 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     activity_id = fields.One2many('account.analytic.line', 'client_id', string='Actividades')
+    task_id = fields.One2many('project.task', 'client_id', string = 'Tareas Asociadas')

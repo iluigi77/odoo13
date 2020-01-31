@@ -230,3 +230,50 @@ class NameClass(....):
 </xpath>
 ~~~
 
+~~~
+
+    @api.onchange('client_id')
+    def _load_seccions(self):
+        seccions=self.env['posik_client.informe_seccion'].search([])
+        self.seccion_ids= seccions
+
+    @api.onchange('client_id')
+    def _load_web_clients(self):
+        self.web_client_ids= [(3,t.id) for t in self.web_client_ids]
+        if self.client_id:
+            self.web_client_ids= [(4,t.id)for t in self.client_id.web_site]
+
+    @api.onchange('client_id')
+    def _load_link_building(self):
+        self.link_building_ids= [(3,t.id) for t in self.link_building_ids]
+        if self.client_id:
+            dd= datetime.datetime.today()
+            self.link_building_ids= [(4,t.id)for t in self.client_id.link_building_ids if t.date_informe.month == dd.month and t.date_informe.year == dd.year]
+
+    @api.onchange('client_id')
+    def _on_change_client_id(self):
+        for report in self:
+            report.activity_url= [(3,t.id.origin) for t in report.activity_url]
+
+            if report.client_id:
+                report.name_client= report.client_id.name 
+                report.informe_text_client= report.client_id.informe_text
+                # task
+                dd= datetime.datetime.today()
+                activities= [(4,t.id) for t in report.client_id.activity_id if t.date.month == dd.month and t.date.year == dd.year]
+                report.activity_url= activities
+            else:
+                report.name_client= None 
+
+    @api.onchange('client_id')
+    def _load_advertising_investment(self):
+        for this in self:
+            record= this.client_id.advertising_investment_ids  
+            dd= datetime.datetime.today()
+            this.advertising_investment_ids= [(4,t.id) for t in record if t.date_informe.month == dd.month and t.date_informe.year == dd.year]
+
+    
+    def generate_report(self):
+        if self.client_id and self.task_id:
+            pass
+~~~

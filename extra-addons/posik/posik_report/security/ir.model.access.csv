@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_posik_report_posik_report,posik_report.posik_report,model_posik_report_posik_report,base.group_user,1,1,1,1
+access_posik_report_transcient_hours_seccion,posik_report.transcient_hours_seccion,model_posik_report_transcient_hours_seccion,base.group_user,1,1,1,1
+access_posik_report_transcient_activity,posik_report.transcient_activity,model_posik_report_transcient_activity,base.group_user,1,1,1,1

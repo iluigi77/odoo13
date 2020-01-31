@@ -16,6 +16,8 @@
                             </group>
                             <group >
                                 <field name="client_id" />
+                                <field name="task_id" />
+                                
                                 <field name="name_client" readonly="1"/>
                                 <field name="informe_text_client"/>
                             </group>
@@ -24,6 +26,21 @@
 
                         <notebook>
                             <page string='Actividades'>
+                                <field name="activities_seccion" mode='tree'>
+                                    <tree
+                                        decoration-bf="type_row == 'seccion'"
+                                        decoration-info="type_row == 'subseccion'"
+                                        decoration-warning="type_row == 'shor_activity'"
+                                        >
+                                        <field name='header_name'/>
+                                        <field name='name'/>
+                                        <field name='url'/>
+                                        <field name='type_row' invisible="1"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <!-- <page string='Actividades'>
                                 <field name="activity_url" mode='tree'>
                                     <tree>
                                         <field name='name'/>
@@ -33,9 +50,9 @@
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
-                            </page>
+                            </page> -->
                             <page string='Link Building'>
-                                <field name="link_building_id" />
+                                <field name="link_building_ids" />
                                 <div class="oe_clear"/>
                             </page>
                             <page string='Inversión en Publicidad'>
@@ -47,6 +64,23 @@
                                         <field name="importe"/>
                                         <field name="date_informe"/>
                                         <field name="month_informe"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Horas Invertidas'>
+                                <group>
+                                    <button name="generate_hours_activities" string="Calcular Horas por Sección" action="gap_report_detail_action_view" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/>
+                                </group>
+                                <field name="hour_seccion">
+                                    <tree
+                                        editable="bottom"
+                                        create="false"
+                                        delete="false"
+                                        >
+                                        <field name="name"/>
+                                        <field name="hours_internal" widget="float_time"/>
+                                        <field name="hours_external" widget="float_time"/>
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
