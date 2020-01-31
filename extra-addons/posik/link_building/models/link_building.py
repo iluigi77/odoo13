@@ -24,23 +24,20 @@ class link_building(models.Model):
     _name = 'link_building.link_building'
     _description = 'link_building.link_building'
 
-    def _get_today(self):
-        return datetime.datetime.now()
-
     def _get_hour(self):
         now= datetime.datetime.now()
         h_to_m= now.hour * 60
         minutes= h_to_m + now.minute
         return minutes/60 if minutes>0 else 0
 
-    date_create = fields.Datetime(string='Fecha de creación', required= True, default = _get_today, readonly= '1')
+    date_create = fields.Datetime(string='Fecha de creación', required= True, default = lambda self: datetime.datetime.now(), readonly= '1')
     hour_create = fields.Float(string='Hora Creación', default=_get_hour)
-    date_informe = fields.Date(string='Fecha de informe', required= True, default=_get_today)
+    date_informe = fields.Date(string='Fecha de informe', required= True, default= lambda self: datetime.datetime.now())
     month_informe = fields.Char(string='Mes de informe', required= True, compute='_onchange_date_informe')
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
     web_client = fields.Many2one('posik_client.web_site', string='Sitio Web', domain="[('client_id', '=', client_id)]" )
     url = fields.Char('Url Resultante')
-    external_hours = fields.Float(string='Horas Externas', default= 1.5)
+    external_hours = fields.Float(string='Horas Reporte', default= 1.5)
     link_price = fields.Float('Precio de Enlace', digits='Product Price')
     provider = fields.Char('Proveedor')
     anchor = fields.Char('Anchor')
@@ -57,9 +54,10 @@ class link_building(models.Model):
 
     @api.onchange('date_informe')
     def _onchange_date_informe(self):
-        if self.date_informe:
-            month= get_month(self.date_informe.month)
-            self.month_informe= month + ' '+str(self.date_informe.year)
+        for this in self:
+            if this.date_informe:
+                month= get_month(this.date_informe.month)
+                this.month_informe= month + ' '+str(this.date_informe.year)
     
     """ @api.onchange('timesheets_ids')
     def _onchange_timesheets_ids(self):

@@ -57,7 +57,7 @@
                 <tree>
                     <field name="name" />
                     <field name="description" />
-                    <field name="note" />
+                    <!-- <field name="note" /> -->
                 </tree>
             </field>
         </record>
@@ -69,7 +69,7 @@
                 <search>
                     <field name="name" />
                     <field name="description" />
-                    <field name="note" />
+                    <!-- <field name="note" /> -->
                 </search>
             </field>
         </record>

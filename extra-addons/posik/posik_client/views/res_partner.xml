@@ -26,6 +26,7 @@
                                     <tree
                                         editable="bottom"
                                         >
+                                        <field name="date_create"/>
                                         <field name="provider_id"/>
                                         <field name="client_id" invisible='1'/>
                                         <field name="web_client" />

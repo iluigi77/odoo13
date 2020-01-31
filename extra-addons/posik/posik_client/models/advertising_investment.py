@@ -33,14 +33,12 @@ class AdvertisingInvestment(models.Model):
     _name = 'posik_client.advertising_investment'
     _description = 'Informe Subseccions'
 
-    def _get_today(self):
-        return datetime.datetime.now()
-
+    date_create = fields.Date(string='Fecha de creación', required= True, default = lambda self: datetime.datetime.today(), readonly= '1')
     provider_id = fields.Many2one('posik_client.provider', string='Proveedor', required=True)
     client_id = fields.Many2one('res.partner', string="Cliente", required=True)
     web_client = fields.Many2one('posik_client.web_site', string="Web del cliente", required=True, domain="[('client_id', '=', client_id)]")
     importe = fields.Float(string='Importe', required= True, default= 0)
-    date_informe = fields.Date(string='Fecha de informe', required= True, default=_get_today)
+    date_informe = fields.Date(string='Fecha de informe', required= True, default= lambda self: datetime.datetime.today())
     month_informe = fields.Char(string='Mes de informe', required= True, compute='_onchange_date_informe')
 
     @api.onchange('date_informe')

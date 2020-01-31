@@ -23,9 +23,13 @@
                             </group>
                         </group>
                         <hr/>
+                        <group>
+                            <button visible="[('compute', '=', False)]" name="generate_report" string="Obtener datos para Reporte" icon="fa-arrow-circle-down" type="object" class="oe_edit_only oe_highlight"/>
+                            <!-- <button visible="[('compute', '=', True)]" name="generate_report" string="Obtener datos para Reporte" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/> -->
+                        </group>
 
-                        <notebook>
-                            <page string='Actividades'>
+                        <notebook visible="[('compute', '=', False)]">
+                            <!-- <page string='Actividades'>
                                 <field name="activities_seccion" mode='tree'>
                                     <tree
                                         decoration-bf="type_row == 'seccion'"
@@ -39,25 +43,36 @@
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
-                            </page>
-                            <!-- <page string='Actividades'>
+                            </page> -->
+                            <page string='Actividades'>
                                 <field name="activity_url" mode='tree'>
-                                    <tree>
-                                        <field name='name'/>
-                                        <field name='seccion_id'/>
-                                        <field name='subseccion_id'/>
+                                    <tree
+                                        delete="true" create="false"
+                                        decoration-warning="short_timesheet == True"
+
+                                        >
+                                        <field name="date"/>
+                                        <field name="employee_id"/>
+                                        <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
+                                        <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
                                         <field name='url'/>
+                                        <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                        <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                        <field name="name"/>
+                                        <field name='pic_activity'/>
+                                        <field name='short_timesheet' invisible='1'/> 
+                                        <field name="unit_amount" widget="timesheet_uom"/>
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
-                            </page> -->
+                            </page>
                             <page string='Link Building'>
                                 <field name="link_building_ids" />
                                 <div class="oe_clear"/>
                             </page>
                             <page string='Inversión en Publicidad'>
                                 <field name="advertising_investment_ids">
-                                    <tree>
+                                    <tree delete="true" create="false" >
                                         <field name="provider_id"/>
                                         <field name="client_id" invisible='1' />
                                         <field name="web_client"/>
@@ -70,7 +85,7 @@
                             </page>
                             <page string='Horas Invertidas'>
                                 <group>
-                                    <button name="generate_hours_activities" string="Calcular Horas por Sección" action="gap_report_detail_action_view" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/>
+                                    <!-- <button name="generate_hours_activities" string="Calcular Horas por Sección" action="gap_report_detail_action_view" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/> -->
                                 </group>
                                 <field name="hour_seccion">
                                     <tree
@@ -81,6 +96,20 @@
                                         <field name="name"/>
                                         <field name="hours_internal" widget="float_time"/>
                                         <field name="hours_external" widget="float_time"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Precios por Hora'>
+                                <field name="hour_price_ids">
+                                    <tree
+                                        delete="false" create="false"
+                                        >
+                                        <field name="name"/>
+                                        <field name="hour_price"/>
+                                        <field name="discount_hour_price"/>
+                                        <field name="seccion_id"/>
+                                        <field name="month_informe"/>
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>

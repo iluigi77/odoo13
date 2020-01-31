@@ -57,7 +57,6 @@
             <field name="arch" type="xml">
                 <tree editable="bottom">
                     <field name="date_create" widget='date' />
-                    <field name="hour_create" widget="float_time"/>
                     <field name="date_informe" />
                     <field name="month_informe" />
                     <field name="client_id" />
@@ -70,6 +69,7 @@
                     <field name="user" />
                     <field name="password" password="True" />
                     <field name="external_hours" widget="float_time"/>
+                    <field name="hour_create" widget="float_time"/>
                     <field name="total_timesheet_hours" widget="float_time"/>
                     <field name="link_price" />
                 </tree>
