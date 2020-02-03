@@ -29,7 +29,8 @@ class PosikReport(models.Model):
         yyyy = date.strftime("%Y")
         month_name= get_month(date.month)
         return month_name +' '+ yyyy
-
+    
+    name= fields.Char(string="Reporte", compute="_get_name", readonly=True)
     date_name= fields.Char(string='Mes y Año', default=_get_month, readonly="1")
     tittle= fields.Text(string='Título', 
         default= lambda self: "Informe de trabajos Mto. Web y Marketing Digital  " + self._get_month(), 
@@ -45,11 +46,55 @@ class PosikReport(models.Model):
     advertising_investment_ids = fields.Many2many('posik_client.advertising_investment', string = 'Inversiones en Publicidad', relation="m2m_adv_invest_2_report")
     hour_price_ids = fields.Many2many('posik_client.hour_price', string = 'Precios por Hora')
 
-    hour_seccion = fields.One2many('posik_report.transcient_hours_seccion', 'report_id', string='Horas por Secciones')
+    hour_seccion_id = fields.One2many('posik_report.transcient_hours_seccion', 'report_id', string='Horas por Secciones')
     # activities_seccion = fields.One2many('posik_report.transcient_activity', 'report_id', string='Actividades por Secciones', relation="m2m_activ_seccion_2_report")
-
+    text_total_price= fields.Text(string='Resumen de monto por horas', default='No existen tarifas por horas establecidas', compute="compute_text_total_price")
+    total_price_link_building= fields.Float(string='Total', default= 0, readonly='1')
+    total_time_link_building= fields.Float(string='Tiempo Total', default= 0, readonly='1')
     compute= fields.Boolean(string="Obtener datos para el report", default= False)
+    
+    def compute_text_total_price(self):
+        if self.hour_price_ids:
+            text= "Iguala mensual 1 de "
+            text_hours= ''
+            first= True
 
+            tarifas= self.hour_price_ids 
+            res={}
+            for hour_seccion in self.hour_seccion_id:
+                res.setdefault(hour_seccion.seccion_id.id, []).append({ 'hours_external':hour_seccion.hours_external })
+            
+            total=0
+            for t in tarifas:
+                discount= t.discount_hour_price / 100
+                price= t.hour_price
+                horas= 0
+                for seccion in t.seccion_id:
+                    idd=seccion.id if type(seccion.id) is int else seccion.id.origin
+                    hour_by_seccion= res[idd][0]
+                    horas += hour_by_seccion['hours_external']
+                    print("para la seccion %s: %.4f (float) equivalente a %02d:%02d horas " %(seccion.name, horas, int(horas), (horas % 1 * 60)) )
+                    print("a %.2f €/hora " %(price) )
+
+                if horas>0:
+                    if not first: text_hours+= " y "
+                    text_hours += "%02d:%02d horas de trabajo al mes a %s€/hora" %(int(horas), (horas % 1 * 60), price)
+                    first= False
+                    # anidar apartados
+
+                    total_by_hp= (price* horas)
+
+                    if discount>0:
+                        text_hours += ", con un descuento de %d %%" %((discount*100))
+                        total_by_hp= total_by_hp-(total_by_hp* discount) 
+                    total+= total_by_hp
+            if not first:
+                text+= '%.2f € calculada para un total de %s' %(total,text_hours)
+                self.text_total_price= text
+            else:
+                self.text_total_price= "No existen tarifas por horas establecidas"
+        else:
+            self.text_total_price= "No existen tarifas por horas establecidas"
 
     def generate_report(self):
         self.web_client_ids= [(3,t.id) for t in self.web_client_ids]
@@ -69,7 +114,44 @@ class PosikReport(models.Model):
             self.generate_hours_activities()
             self.compute= True
 
-    @api.onchange('activity_url')
+    def generate_hours_activities(self):
+        self.hour_seccion_id= [(2,t.id) for t in self.hour_seccion_id]
+
+        res={}
+        for item in self.seccion_ids:
+            res.setdefault(item['id'], [])
+        
+        for p in self.activity_url:
+            item= p.read([
+                'name', 'seccion_id', 'subseccion_id', 'unit_amount', 
+                'url', 'web_client', 'short_timesheet',
+            ])[0]
+            res.setdefault(p['seccion_id']['id'], []).append(item)
+        
+        for key in res:
+            seccion_id=self.env['posik_client.informe_seccion'].browse([key])
+            record= res[key]
+            total= 0
+            if seccion_id.link_building:
+                price_lb= 0
+                for lb in self.link_building_ids:
+                    total += lb['external_hours']
+                    price_lb += lb['link_price']
+                self.total_time_link_building= total
+                self.total_price_link_building= price_lb
+            else:
+                for pp in record:
+                    total += pp['unit_amount']
+            self.hour_seccion_id= [(0,0,{
+                'name': seccion_id.name,
+                'seccion_id': key, 
+                # 'seccion_id': seccion_id.id,
+                'hours_internal': total,
+                'hours_external': total
+            })]
+        self.compute_text_total_price()
+
+    @api.onchange('activity_url', 'link_building_ids')
     def _onchange_activities(self):
         res={}
         for item in self.seccion_ids:
@@ -88,52 +170,26 @@ class PosikReport(models.Model):
             }
             res.setdefault(p['seccion_id']['id'], []).append(item2)
         
-        for line in self.hour_seccion:
+        for line in self.hour_seccion_id:
             seccion_id=self.env['posik_client.informe_seccion'].browse([line.seccion_id.id])
-            hour_seccion_id= line.id.origin
+            hs_id= line.id.origin
             record= res[line.seccion_id.id]
             total= 0
             if seccion_id.link_building:
+                price_lb= 0
                 for lb in self.link_building_ids:
                     total += lb['external_hours']
+                    price_lb += lb['link_price']
+                self.total_time_link_building= total
+                self.total_price_link_building= price_lb
             else:
                 for pp in record:
                     total += pp['unit_amount']
-            self.hour_seccion= [(1,hour_seccion_id,{'hours_internal': total})]
-
-
-    def generate_hours_activities(self):
-        self.hour_seccion= [(2,t.id) for t in self.hour_seccion]
-
-        res={}
-        for item in self.seccion_ids:
-            res.setdefault(item['id'], [])
-        
-        for p in self.activity_url:
-            item= p.read([
-                'name', 'seccion_id', 'subseccion_id', 'unit_amount', 
-                'url', 'web_client', 'short_timesheet',
-            ])[0]
-            res.setdefault(p['seccion_id']['id'], []).append(item)
-        
-        for key in res:
-            seccion_id=self.env['posik_client.informe_seccion'].browse([key])
-            record= res[key]
-            total= 0
-            if seccion_id.link_building:
-                for lb in self.link_building_ids:
-                    total += lb['external_hours']
-            else:
-                for pp in record:
-                    total += pp['unit_amount']
-            self.hour_seccion= [(0,0,{
-                'name': seccion_id.name,
-                'seccion_id': key, 
-                # 'seccion_id': seccion_id.id,
+            self.hour_seccion_id= [(1,hs_id,{
                 'hours_internal': total,
-                'hours_external': total
-            })]
-
+                'hours_external': total if line.hours_external == line.hours_internal else line.hours_external
+                })]
+        self.compute_text_total_price()
 
     @api.onchange('client_id')
     def _load_seccions(self):
@@ -149,45 +205,9 @@ class PosikReport(models.Model):
             self.name_client= self.client_id.name 
             self.informe_text_client= self.client_id.informe_text
             
-    """ def generate_activities(self):
-        self.activities_seccion= [(3,t.id) for t in self.activities_seccion]
-        res = {}
-        for item in self.activity_url:
-            # crea una entrada en el dict (seccion)
-            res.setdefault(item['seccion_id']['name'], {})
-            # a la entrada creada, le crea otra entrada (subseccion) y le a;ade un elemento al array
-            res[item['seccion_id']['name']].setdefault(item['subseccion_id']['name'], []).append(item.read(["name", "url", "short_timesheet"])[0])
-        
-        for seccion in res:
-            self.activities_seccion=[(0,0,{
-                'header_name': seccion,
-                'type_row': 'seccion',
-            })]
-            for sub in res[seccion]:
-                self.activities_seccion=[(0,0,{
-                    'header_name': sub,
-                    'type_row': 'subseccion',
-                })]
-                for p in res[seccion][sub]:
-                    self.activities_seccion=[(0,0,{
-                        'header_name': '->',
-                        'name': p['name'],
-                        'url': p['url'],
-                        'type_row': 'activity' if not p['short_timesheet'] else 'shor_activity',
-                    })] 
-    """
-
-
-    # def _total_hour_price(self):
-    #     for p in self.hour_price_ids:
-    #         price= p.hour_price
-    #         discount_price= p.discount_hour_price / 100
-    #         total =0
-    #         for seccion in p.seccion_id:
-    #             horas=0
-    #             for copy in self.hour_seccion:
-    #                 if copy.seccion_id.id == seccion.id:
-    #                     horas= copy.seccion_id.hours_external
-                
-    #             total+= (price*horas)*discount_price
-                
+    @api.onchange('tittle', 'date_name')
+    def _get_name(self):
+        name="undefined"
+        if self.client_id: 
+            name=self.client_id.name 
+        self.name= 'report - %s %s' %(name, self.date_name)

@@ -250,7 +250,7 @@
                                     <table class="table table-sm o_main_table border_posik">
                                         <tbody class="sale_tbody">
                                             <t t-set="index" t-value="0" />
-                                            <t t-foreach="doc.hour_seccion" t-as="line">
+                                            <t t-foreach="doc.hour_seccion_id" t-as="line">
                                                 <t t-set="index" t-value="index+1" />
                                                 <tr  style="color: #575756; /*font-size: 9px*/">
                                                     <td name="td_name_task" class="text-left">
@@ -266,7 +266,7 @@
                                     </table>
                                 
                                     <p  style="color: #575756; /*font-size: 15px*/">
-                                        
+                                        <t t-esc="doc.text_total_price" />
                                     </p>
                                 
                                 </div>

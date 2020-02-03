@@ -188,3 +188,50 @@ class NameClass(....):
 ~~~
 
 # mientras
+~~~
+ <page string='Actividades'>
+                                <field name="activities_seccion" mode='tree'>
+                                    <tree
+                                        decoration-bf="type_row == 'seccion'"
+                                        decoration-info="type_row == 'subseccion'"
+                                        decoration-warning="type_row == 'shor_activity'"
+                                        >
+                                        <field name='header_name'/>
+                                        <field name='name'/>
+                                        <field name='url'/>
+                                        <field name='type_row' invisible="1"/>
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+~~~
+
+# baul
+~~~
+def generate_activities(self):
+    self.activities_seccion= [(3,t.id) for t in self.activities_seccion]
+    res = {}
+    for item in self.activity_url:
+        # crea una entrada en el dict (seccion)
+        res.setdefault(item['seccion_id']['name'], {})
+        # a la entrada creada, le crea otra entrada (subseccion) y le a;ade un elemento al array
+        res[item['seccion_id']['name']].setdefault(item['subseccion_id']['name'], []).append(item.read(["name", "url", "short_timesheet"])[0])
+    
+    for seccion in res:
+        self.activities_seccion=[(0,0,{
+            'header_name': seccion,
+            'type_row': 'seccion',
+        })]
+        for sub in res[seccion]:
+            self.activities_seccion=[(0,0,{
+                'header_name': sub,
+                'type_row': 'subseccion',
+            })]
+            for p in res[seccion][sub]:
+                self.activities_seccion=[(0,0,{
+                    'header_name': '->',
+                    'name': p['name'],
+                    'url': p['url'],
+                    'type_row': 'activity' if not p['short_timesheet'] else 'shor_activity',
+                })] 
+~~~

@@ -46,12 +46,15 @@
                                     mode="tree, form"
                                     >
                                     <tree
+                                    editable="bottom"
                                         >
+                                        <field name="date_informe"/>
+                                        <field name="month_informe"/>
                                         <field name="name"/>
                                         <field name="client_id" invisible="1"/>
                                         <field name="hour_price"/>
                                         <field name="discount_hour_price"/>
-                                        <field name="seccion_id"/>
+                                        <field name="seccion_id"  widget="many2many_tags"/>
                                     </tree>
                                     <form>
                                         <sheet>

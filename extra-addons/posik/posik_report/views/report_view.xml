@@ -24,29 +24,16 @@
                         </group>
                         <hr/>
                         <group>
-                            <button visible="[('compute', '=', False)]" name="generate_report" string="Obtener datos para Reporte" icon="fa-arrow-circle-down" type="object" class="oe_edit_only oe_highlight"/>
-                            <!-- <button visible="[('compute', '=', True)]" name="generate_report" string="Obtener datos para Reporte" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/> -->
+                            <button name="generate_report" string="Obtener datos para Reporte" icon="fa-arrow-circle-down" type="object" class="oe_edit_only oe_highlight"/>
+                        </group>
+                        <group>
+                            <!-- <button name="compute_total_price" string="PRUEBA" icon="fa-arrow-circle-down" type="object" class=""/> -->
                         </group>
 
-                        <notebook visible="[('compute', '=', False)]">
-                            <!-- <page string='Actividades'>
-                                <field name="activities_seccion" mode='tree'>
-                                    <tree
-                                        decoration-bf="type_row == 'seccion'"
-                                        decoration-info="type_row == 'subseccion'"
-                                        decoration-warning="type_row == 'shor_activity'"
-                                        >
-                                        <field name='header_name'/>
-                                        <field name='name'/>
-                                        <field name='url'/>
-                                        <field name='type_row' invisible="1"/>
-                                    </tree>
-                                </field>
-                                <div class="oe_clear"/>
-                            </page> -->
+                        <notebook >
                             <page string='Actividades'>
                                 <field name="activity_url" mode='tree'>
-                                    <tree
+                                    <tree default_order="seccion_id, subseccion_id, short_timesheet, date"
                                         delete="true" create="false"
                                         decoration-warning="short_timesheet == True"
 
@@ -67,7 +54,36 @@
                                 <div class="oe_clear"/>
                             </page>
                             <page string='Link Building'>
-                                <field name="link_building_ids" />
+                                <field name="link_building_ids">
+                                    <tree
+                                        create="false"
+                                        delete="true"
+                                        editable="bottom"
+                                        >
+                                        <field name="date_create" widget='date' />
+                                        <field name="date_informe" />
+                                        <field name="month_informe" />
+                                        <field name="client_id" />
+                                        <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                        <field name="provider" />
+                                        <field name="anchor" />
+                                        <field name="seccion" />
+                                        <field name="portal" />
+                                        <field name="email" widget="email"/>
+                                        <field name="user" />
+                                        <field name="password" password="True" />
+                                        <field name="external_hours" widget="float_time"/>
+                                        <field name="hour_create" widget="float_time"/>
+                                        <field name="total_timesheet_hours" widget="float_time"/>
+                                        <field name="link_price" />
+                                    </tree>
+                                </field>
+                                <group >
+                                    <group class="oe_subtotal_footer oe_right" >
+                                        <field name="total_price_link_building" />
+                                        <field name="total_time_link_building" widget="float_time" />
+                                    </group>
+                                </group>
                                 <div class="oe_clear"/>
                             </page>
                             <page string='Inversión en Publicidad'>
@@ -80,14 +96,12 @@
                                         <field name="date_informe"/>
                                         <field name="month_informe"/>
                                     </tree>
+
                                 </field>
                                 <div class="oe_clear"/>
                             </page>
                             <page string='Horas Invertidas'>
-                                <group>
-                                    <!-- <button name="generate_hours_activities" string="Calcular Horas por Sección" action="gap_report_detail_action_view" icon="fa-arrow-circle-down" type="object" class="oe_highlight"/> -->
-                                </group>
-                                <field name="hour_seccion">
+                                <field name="hour_seccion_id">
                                     <tree
                                         editable="bottom"
                                         create="false"
@@ -108,10 +122,13 @@
                                         <field name="name"/>
                                         <field name="hour_price"/>
                                         <field name="discount_hour_price"/>
-                                        <field name="seccion_id"/>
+                                        <field name="seccion_id" widget="many2many_tags"/>
                                         <field name="month_informe"/>
                                     </tree>
                                 </field>
+                                <group >
+                                    <field name="text_total_price" />
+                                </group>
                                 <div class="oe_clear"/>
                             </page>
                         </notebook>
@@ -126,8 +143,9 @@
             <field name="model">posik_report.posik_report</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="tittle" />
+                    <field name="date_name" />
                     <field name="name_client" />
+                    <field name="name" />
                 </tree>
             </field>
         </record>
