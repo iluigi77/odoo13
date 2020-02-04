@@ -1,0 +1,100 @@
+<odoo>
+    <data>
+        <record id='posik_project_short_timesheet_form_view' model='ir.ui.view'>
+           <field name='name'>posik_project.short_timesheet.form</field>
+           <field name='model'>posik_project.short_timesheet</field>
+           <field name='arch' type='xml'>
+               <form editable='bottom'>
+                   <sheet>
+                       <field name='unit_amount'/>
+                        <field  string='Activades Cortas'
+                            name="timesheet_ids" 
+                            mode="tree" 
+                            
+                            >
+                            <tree 
+                                editable="bottom" 
+                                string="Timesheet Activities" 
+                                default_order="date_informe, seccion_id, subseccion_id"
+                                >
+                                <field name="date_informe"/>
+                                <field name="month_informe"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+
+                                <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
+                                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='url'/>
+                                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                    
+                                <field name="name"/>
+
+                                <field name='pic_activity'/>
+                                <field name='short_timesheet'/> 
+
+                                <field name="hour_create" widget="timesheet_uom"/>
+                                <field name="unit_amount" widget="timesheet_uom"/>
+                                <field name="project_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                            </tree>
+                        </field>
+                   </sheet>
+               </form>
+           </field>
+        </record>
+
+        <record id='project_task_form_view_inherit' model='ir.ui.view'>
+            <field name='name'>project.task.form.short_timesheet</field>
+            <field name='model'>project.task</field>
+            <field name='inherit_id' ref='project.view_task_form2'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//page[@name='description_page']" position='after'>
+                    <page string='Partes de horas cortas'>
+                        <field 
+                            name="short_timesheet_ids" 
+                            mode="tree" 
+                            attrs="{'invisible': [('analytic_account_active', '=', False)]}" 
+                            context="{
+                                'default_project_id': project_id, 
+                                'default_task_id': id, 
+                                'default_client_id': client_id,
+                                'default_name':''
+                                }"
+                            >
+                            <tree 
+                                editable="bottom" 
+                                string="Partes de horas cortas" 
+                                default_order="date_informe, seccion_id, subseccion_id, short_timesheet"
+                                decoration-danger="short_timesheet == True"
+                                >
+                                <field name="date_informe"/>
+                                <field name="month_informe"/>
+                                <!-- <field name="user_id" invisible="1"/> -->
+                                <!-- <field name="employee_id" required="1"/> -->
+
+                                <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
+                                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='url'/>
+                                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                                    
+                                <field name="name"/>
+
+                                <field name='pic_activity'/>
+                                <field name='short_timesheet' invisible='1'/> 
+
+                                <field name="hour_create" widget="timesheet_uom"/>
+                                <!-- <field name="unit_amount" widget="timesheet_uom"/> -->
+                                <!-- <field name="project_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/> -->
+                                <button type="object" icon="fa-object-group" name="open_wizard" string="SubActividades"/> 
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

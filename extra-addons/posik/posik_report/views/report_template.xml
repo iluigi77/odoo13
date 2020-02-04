@@ -30,13 +30,13 @@
                                 <h4 class="mt16 text-center" style="color: #575756; /*font-size: 17px*/" t-field="doc.date_name"/>
                                 <br/>
                                 <div id='block_center' style="text-align: center;">
-                                    <t t-set="index" t-value="1"/>
+                                    <t t-set="index" t-value="0"/>
                                     <t t-foreach= 'doc.web_client_ids' t-as='web'>
                                         <t t-if="web.logo">
                                             <t t-if="(index % 5) == 0">
-                                                <br/>
+                                                <br style="margin:12px; "/>
                                             </t>
-                                            <div style="margin-left:12px; display: inline-block;" >
+                                            <div style="margin:12px; display: inline-block;" >
                                                 <img t-att-src='image_data_uri(web.logo)' height="30px"/>
                                             </div>
                                             <t t-set="index" t-value="index+1"/>
@@ -149,6 +149,7 @@
 
                                             <!-- Secciones especiales -->
                                             <t t-if="seccion.link_building">
+                                                <br/>
                                                 <h5 style="color: #1d70b7; /*font-size: 12px*/"> <span>Link Building</span> </h5>
                                                 <t t-foreach='doc.link_building_ids' t-as='link_building'>
                                                     <p style="color: #575756; /*font-size: 9px*/">
@@ -170,6 +171,7 @@
                                                 </t>
                                             </t>
                                             <t t-if="seccion.social_network">
+                                                <br/>
                                                 <h5 style="color: #1d70b7; /*font-size: 12px*/"> <span>Redes Sociales</span> </h5>
                                                 <t t-if="len(doc.client_id.my_social_network) == 0">
                                                     <p style="color: #575756; /*font-size: 9px*/"> <span>Servicio no contratado</span> </p>
@@ -218,6 +220,7 @@
 
                                             </t>
                                             <t t-if="seccion.sem">
+                                                <br/>
                                                 <h5 style="color: #1d70b7; /*font-size: 12px*/"> <span>Tabla de precios</span> </h5>
                                                 <table class="table table-sm o_main_table border_posik">
                                                     <tbody class="sale_tbody">
@@ -249,12 +252,12 @@
                                     <h5 style="color: #575756; /*font-size: 15px*/"> <span>Resumen de Horas</span> </h5>
                                     <table class="table table-sm o_main_table border_posik">
                                         <tbody class="sale_tbody">
-                                            <t t-set="index" t-value="0" />
+                                            <!-- <t t-set="index" t-value="0" /> -->
                                             <t t-foreach="doc.hour_seccion_id" t-as="line">
-                                                <t t-set="index" t-value="index+1" />
+                                                <!-- <t t-set="index" t-value="index+1" /> -->
                                                 <tr  style="color: #575756; /*font-size: 9px*/">
                                                     <td name="td_name_task" class="text-left">
-                                                        <span t-esc="index"></span><span>) </span>
+                                                        <span t-field="line.index"></span><span>) </span>
                                                         <span t-field="line.name"/>
                                                     </td>
                                                     <td name="td_red_task" class="text-right">

@@ -20,35 +20,9 @@ def get_month(argument):
     }
     return switcher.get(argument, 'es inválido')
 
-
-class posik_project(models.Model):
-    _inherit = 'project.task'
-
-    client_id = fields.Many2one('res.partner', string='Cliente', required= True)
-    short_timesheet_hours = fields.Float(string="Horas en partes cortas")
-
-    @api.onchange('short_timesheet_hours','timesheet_ids')
-    def _onchange_short_timesheet_hours(self):
-        total = 0
-        for line in self.timesheet_ids:
-            if line.short_timesheet: 
-                total = total+1
-
-        # total= total+1 for line in self.timesheet_ids if line.short_timesheet
-        media= total if total==0 else self.short_timesheet_hours / total
-        for line in self.timesheet_ids:
-            if line.short_timesheet:
-                line.unit_amount= media
-
-    @api.onchange('client_id')
-    def _onchange_client_id(self):
-        for line in self.timesheet_ids:
-            line.web_client= None if not self.client_id.web_site else self.client_id.web_site[0]
-            line.client_id= self.client_id
-
-class AccountAnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
-    # _order = 'pic_activity'
+class ShortTimeSheet(models.Model):
+    _name = 'posik_project.short_timesheet'
+    _description = 'timesheet with short time'
 
     def _get_hour(self):
         now= datetime.datetime.now()
@@ -63,10 +37,19 @@ class AccountAnalyticLine(models.Model):
     url = fields.Char(string= 'URL')
     pic_activity = fields.Binary(string='Foto de Actividad')
     short_timesheet = fields.Boolean(string="Parte corta", default= False)
+    
 
     date_informe = fields.Date(string='Fecha de Informe', required= True, default= lambda self: datetime.datetime.now())
     month_informe = fields.Char(string='Mes de informe', required= True, compute='_onchange_date_informe')
     hour_create = fields.Float(string='Hora Creación', default=_get_hour)
+
+    task_id = fields.Many2one('project.task', string='Tarea')
+    timesheet_ids = fields.One2many('account.analytic.line', 'parent_timesheet_id', string='Tareas Cortas')
+    name = fields.Char(string='Descripción', required= True)
+    unit_amount= fields.Float(string='Duración', widget="timesheet_uom")
+    project_id = fields.Many2one('project.project', string='Projecto', default=lambda self: self.env.context.get('default_project_id'),
+        index=True, tracking=True, check_company=True, change_default=True)
+
 
     @api.onchange('date_informe')
     def _onchange_date_informe(self):
@@ -83,8 +66,36 @@ class AccountAnalyticLine(models.Model):
     def _onchange_client_id(self):
         self.web_client= None if not self.client_id.web_site else self.client_id.web_site[0]
 
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    def open_wizard(self): 
+        if self.short_timesheet: 
+            return False 
+        else: 
+            return { 
+                'tag' : 'reload', 
+                'type' : 'ir.actions.act_window', 
+                'name': 'SubActividades', 
+                'res_model': 'posik_project.short_timesheet', 
+                'view_mode': 'form', 
+                'view_id ref="posik_project_short_timesheet_form_view"': '', 
+                'target': 'new', 
+                # 'domain': "[('parent_timesheet_id', '=', %s)]" % self.id, 
+                'context': { 
+                    'default_project_id': self.project_id.id, 
+                    'default_client_id': self.client_id.id,  
+                    'default_tasker_id': self.task_id.id,  
+                    # 'default_parent_timesheet_id': self.id,  
+                    'default_name':'' 
+                    }, 
+                # 'limit': 1 
+            } 
 
-    activity_id = fields.One2many('account.analytic.line', 'client_id', string='Actividades')
-    task_id = fields.One2many('project.task', 'client_id', string = 'Tareas Asociadas')
+
+class AccountAnalyticLine(models.Model):
+    _inherit= 'account.analytic.line'
+
+    parent_timesheet_id = fields.Many2one('posik_project.short_timesheet', string='Nodo Padre')
+
+class ProjectTask(models.Model):
+    _inherit= 'project.task'
+
+    short_timesheet_ids = fields.One2many('posik_project.short_timesheet', 'task_id',string='Parte Corta')

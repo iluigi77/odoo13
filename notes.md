@@ -235,3 +235,24 @@ def generate_activities(self):
                     'type_row': 'activity' if not p['short_timesheet'] else 'shor_activity',
                 })] 
 ~~~
+
+
+~~~
+<!-- <record id="posik_project_view_form" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.posik_project</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='task_id']" position="after">
+
+                <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
+                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                <field name='url'/>
+                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                            
+            </xpath>
+
+        </field>
+    </record> -->
+~~~

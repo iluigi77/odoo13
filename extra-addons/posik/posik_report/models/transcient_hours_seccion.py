@@ -6,6 +6,7 @@ import datetime
 class TranscientHoursSeccion(models.Model):
     _name ="posik_report.transcient_hours_seccion"
 
+    index = fields.Integer(string='Index')
     name = fields.Char('Sección', required=True)
     report_id = fields.Many2one('posik_report.posik_report', string='Report')
     seccion_id = fields.Many2one('posik_report.informe_seccion', string='Report')

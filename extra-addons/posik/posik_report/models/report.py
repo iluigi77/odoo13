@@ -36,6 +36,7 @@ class PosikReport(models.Model):
         default= lambda self: "Informe de trabajos Mto. Web y Marketing Digital  " + self._get_month(), 
         readonly='1')
     client_id = fields.Many2one('res.partner', string='Cliente', required= True)
+    old_client_id = fields.Integer(string='id cliente', store=True, default= 0)
     task_id = fields.Many2one('project.task', string='Tarea', required= True, domain="[('client_id', '=', client_id)]")
     name_client = fields.Char(string='Nombre del Cliente', compute='_on_change_client_id', readonly="1")
     informe_text_client = fields.Text(string="Texto Inicio de Informes")
@@ -69,25 +70,31 @@ class PosikReport(models.Model):
                 discount= t.discount_hour_price / 100
                 price= t.hour_price
                 horas= 0
+                part_text= ''
                 for seccion in t.seccion_id:
                     idd=seccion.id if type(seccion.id) is int else seccion.id.origin
                     hour_by_seccion= res[idd][0]
                     horas += hour_by_seccion['hours_external']
+                    if hour_by_seccion['hours_external']>0:
+                        if len(part_text)>0:
+                            part_text += ', '
+                        part_text += str(seccion.index)
                     print("para la seccion %s: %.4f (float) equivalente a %02d:%02d horas " %(seccion.name, horas, int(horas), (horas % 1 * 60)) )
                     print("a %.2f €/hora " %(price) )
 
                 if horas>0:
-                    if not first: text_hours+= " y "
-                    text_hours += "%02d:%02d horas de trabajo al mes a %s€/hora" %(int(horas), (horas % 1 * 60), price)
+                    if not first: 
+                        text_hours+= " y "
                     first= False
-                    # anidar apartados
-
+                    text_hours += "%02d:%02d horas de trabajo al mes a %s€/hora" %(int(horas), (horas % 1 * 60), price)
                     total_by_hp= (price* horas)
-
+                    # anidar apartados
+                    text_hours+= ' (apartados %s ) ' %(part_text)
                     if discount>0:
                         text_hours += ", con un descuento de %d %%" %((discount*100))
                         total_by_hp= total_by_hp-(total_by_hp* discount) 
                     total+= total_by_hp
+
             if not first:
                 text+= '%.2f € calculada para un total de %s' %(total,text_hours)
                 self.text_total_price= text
@@ -109,7 +116,7 @@ class PosikReport(models.Model):
             self.advertising_investment_ids= [(4,t.id) for t in self.client_id.advertising_investment_ids if t.date_informe.month == dd.month and t.date_informe.year == dd.year]
             self.hour_price_ids= [(4,t.id) for t in self.client_id.hour_price_id if t.date_informe.month == dd.month and t.date_informe.year == dd.year]
             for t in self.client_id.activity_id:
-                if (t.date.month == dd.month and t.date.year == dd.year) and (t.task_id.id == self.task_id.id and t.client_id.id== self.client_id.id):
+                if (t.date_informe.month == dd.month and t.date_informe.year == dd.year) and (t.task_id.id == self.task_id.id and t.client_id.id== self.client_id.id):
                     self.activity_url= [(4,t.id)]
             self.generate_hours_activities()
             self.compute= True
@@ -143,6 +150,7 @@ class PosikReport(models.Model):
                 for pp in record:
                     total += pp['unit_amount']
             self.hour_seccion_id= [(0,0,{
+                'index': seccion_id.index,
                 'name': seccion_id.name,
                 'seccion_id': key, 
                 # 'seccion_id': seccion_id.id,
@@ -203,11 +211,18 @@ class PosikReport(models.Model):
         else:
             self.task_id = None if not self.client_id.task_id else self.client_id.task_id[0]
             self.name_client= self.client_id.name 
+
+    @api.onchange('client_id')
+    def _on_change_old_client(self):
+        if not (self.old_client_id== self.client_id.id):
             self.informe_text_client= self.client_id.informe_text
-            
+            self.old_client_id= int(self.client_id.id)
+        pass
+
     @api.onchange('tittle', 'date_name')
     def _get_name(self):
-        name="undefined"
-        if self.client_id: 
-            name=self.client_id.name 
-        self.name= 'report - %s %s' %(name, self.date_name)
+        for this in self:
+            name="undefined"
+            if this.client_id: 
+                name=this.client_id.name 
+            this.name= 'report - %s %s' %(name, this.date_name)

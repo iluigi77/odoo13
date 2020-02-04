@@ -18,6 +18,11 @@ class InformeSeccion(models.Model):
     _name = 'posik_client.informe_seccion'
     _description = 'Informe Seccions'
 
+    def _get_index(self):
+        record= self.env['posik_client.informe_seccion'].search([])
+        return len(record)+1
+
+    index = fields.Integer(string='Index', default= _get_index)
     name = fields.Char(string= 'Título de Sección', required= True)
     description = fields.Char(string= 'Texto Descriptivo')
     note = fields.Text(string="Nota de la Sección")

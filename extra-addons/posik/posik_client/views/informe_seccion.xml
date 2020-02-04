@@ -34,6 +34,7 @@
                     <sheet>
                         <group name="main">
                             <group name="right">
+                                <field name="index" />
                                 <field name="name" />
                                 <field name="description" />
                                 <field name="note" />
