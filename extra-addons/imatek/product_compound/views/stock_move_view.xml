@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+        <!-- <record id="view_stock_move_line_operation_tree_inehirt77" model="ir.ui.view">
+            <field name="name">stock.move.line.operations.tree</field>
+            <field name='model'>stock.move.line</field>
+            <field name='inherit_id' ref='stock.view_stock_move_line_operation_tree'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//tree//field[@name='lot_name']" position='after'>
+                     <field name="product_compound_line_ids" widget='many2many_tags' context="{'default_stock_move_line_id': id}">
+                     </field>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>

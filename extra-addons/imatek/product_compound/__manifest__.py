@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "serialized_products",
+    'name': "product_compound",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,12 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'mrp'],
+    'depends': ['base', 'product', 'stock', 'mrp'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/stock_product_lot.xml',
+        'views/mrp_bom_views.xml',
+        'views/product_category.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
