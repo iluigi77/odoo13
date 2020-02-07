@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='group_general']" position="inside">
                     <field name="pdf_bin"/>
-                    <field name="vertical_id" widget="many2many_tags"/>
+                    <field name="vertical_id" options="{'no_open':False}"/>
                 </xpath>
 
                 <xpath expr="//page[@name='general_information']//group[1]" position="after">

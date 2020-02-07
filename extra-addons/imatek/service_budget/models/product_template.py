@@ -8,9 +8,11 @@ class ProductTemplate(models.Model):
 
     no_budgetable = fields.Boolean(string='No presupuestable', default= False)
 
-
     @api.onchange('type')
     def _on_change_type(self):
         self.no_budgetable=  True if (self.type== 'service') else False
+        if (self.type== 'service'):
+            cat= self.env['product.category'].search([('is_service', '=', True )], limit=1)
+            self.categ_id= cat[0].id
 
         

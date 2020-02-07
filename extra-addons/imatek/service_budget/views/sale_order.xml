@@ -56,7 +56,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
-                    <field name="no_budgetable" value="'Producto': not no_budgetable, 'Mantenimiento': no_budgetable} " readonly="1" />
+                    <!-- <field name="no_budgetable" value="'Producto': not no_budgetable, 'Mantenimiento': no_budgetable} " readonly="1" /> -->
                 </xpath>
             </field>
         </record>

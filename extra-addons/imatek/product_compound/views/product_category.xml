@@ -9,6 +9,7 @@
                 <xpath expr="//form/sheet//group[@name='first']//field[@name='parent_id']" position='after'>
                     <field name='is_sensorica'/>
                     <field name='is_component'/>
+                    <field name='is_service'/>
                 </xpath>
             </field>
         </record>
@@ -27,6 +28,10 @@
                         <field name="is_component" readonly='1'/>
                         <label for="is_component"/>
                     </div>
+                    <!-- <div>
+                        <field name="is_service" readonly='1'/>
+                        <label for="is_service"/>
+                    </div> -->
                 </xpath>
 
           </field>

@@ -6,8 +6,8 @@ from odoo import models, fields, api
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    # pdf_attach_id = fields.Many2one ('ir.attachment', string = 'Attachment pdf', ondelete = 'cascade')
-    pdf_bin = fields.Binary(string='PDF Adjunto')
+    pdf_bin = fields.Many2one ('ir.attachment', string = 'Adjuntar pdf', ondelete = 'cascade')
+    # pdf_bin = fields.Binary(string='PDF Adjunto')
     vertical_id = fields.Many2many('verticals.verticals', string="Vertical")
 
     #for show products

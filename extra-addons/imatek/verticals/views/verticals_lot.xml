@@ -9,11 +9,32 @@
                     <group>
                         <field name="name"/>
                         <field name="pdf_bin"/>
-                        <field name="product_ids"/>
                     </group>
+                    <hr/>
+                    <field name="product_ids"/>
                 </form>
             </field>
         </record>
+
+        <record id="verticals_lots_form" model="ir.ui.view">
+            <field name="name">verticals.verticals.tree</field>
+            <field name="model">verticals.verticals</field>
+            <field name="arch" type="xml">
+                <tree string='Verticales'>
+                    <field name="name"/>
+                    <field name="pdf_bin"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_report_verticals">
+            <field name="name">Verticales</field>
+            <field name="res_model">verticals.verticals</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="reports_menu_root" name="Verticales" sequence="30"  action="action_report_verticals"/> 
+    
 
     </data>
 </odoo>

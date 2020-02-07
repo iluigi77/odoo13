@@ -256,3 +256,26 @@ def generate_activities(self):
         </field>
     </record> -->
 ~~~
+
+
+attachments= self._context['attachment_ids']
+        result = super(MailComposeMessage, self ).onchange_template_id(template_id, composition_mode, model, res_id) 
+        # [(6, 0, values.get('attachment_ids', []) + attachment_ids)]
+        # values['attachment_ids'] = [att.id for att in template.attachment_ids]
+
+        result['value']['attachment_ids']= [(6,0,att.id) for att in attachments]
+        return result
+
+
+
+            def action_quotation_send(self):
+        result = super(SaleOrder, self ).action_quotation_send() 
+        attachments= []
+        for vertical in self.vertical_id:
+            if vertical.pdf_bin:
+                attachments.append(vertical.pdf_bin)
+            for p in vertical.product_ids:
+                if p.pdf_bin:
+                    attachments.append(p.pdf_bin)
+        result['context'].update({ 'attachment_ids' : attachments }) 
+        return result
