@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import models, product_template, sale_order
+from . import models, product_template, sale_order, stock_picking
