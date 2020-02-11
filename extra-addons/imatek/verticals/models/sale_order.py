@@ -51,7 +51,7 @@ class MailComposeMessage(models.TransientModel):
     _inherit= 'mail.compose.message'
 
     def onchange_template_id(self, template_id, composition_mode, model, res_id):
-        attachments= self._context['attachment_ids']
+        attachments= self._context.get('attachment_ids', [])
         result = super(MailComposeMessage, self ).onchange_template_id(template_id, composition_mode, model, res_id)
         attachments.append((4, result['value']['attachment_ids'][0][2][0]))
         result['value']['attachment_ids']= attachments
