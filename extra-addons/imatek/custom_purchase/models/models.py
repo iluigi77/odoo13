@@ -3,9 +3,9 @@
 # from odoo import models, fields, api
 
 
-# class client_discount(models.Model):
-#     _name = 'client_discount.client_discount'
-#     _description = 'client_discount.client_discount'
+# class custom_purchase(models.Model):
+#     _name = 'custom_purchase.custom_purchase'
+#     _description = 'custom_purchase.custom_purchase'
 
 #     name = fields.Char()
 #     value = fields.Integer()

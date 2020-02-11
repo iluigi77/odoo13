@@ -9,12 +9,10 @@ class verticals(models.Model):
 
     name = fields.Char(string= 'Vertical', required= True)
     description = fields.Text(string= 'Descripción del Vertical', required= False)
-    # pdf_bin = fields.Binary(string='PDF Adjunto')
-    pdf_bin = fields.Many2one('ir.attachment', string='Attachment', ondelete='cascade')
+    attachment_id = fields.Many2one('ir.attachment', string='Attachment', ondelete='cascade')
 
     product_ids = fields.Many2many('product.template', string= 'Productos')
-    # sale_order_id = fields.One2many('sale.order', 'vertical_id', string="Factura")
     sale_order_id = fields.Many2many('sale.order', string="Factura")
-    sale_order_line_ids = fields.One2many('sale.order.line', 'vertical',string='Productos en facturas')
+    sale_order_line_ids = fields.One2many('sale.order.line', 'vertical_id',string='Productos en facturas')
 
 

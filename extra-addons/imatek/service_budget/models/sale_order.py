@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api
 
-
 class OrderLine(models.Model):
     _inherit = 'sale.order.line'
 
@@ -15,7 +14,6 @@ class OrderLine(models.Model):
         values['no_budgetable'] = p.no_budgetable
         res = super(OrderLine, self).create(values)
         return res
-
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'

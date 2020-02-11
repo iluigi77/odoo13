@@ -1,14 +1,18 @@
 <odoo>
   <data>
         <record id="discount_in_order_line" model="ir.ui.view">
-            <field name="name">sale.order.discount_order_line</field>
+            <field name="name">sale.order.line.discount</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="replace">
                     <field name="discount" string="Desc.%"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="after">
+                    <field name="product_category_id"  />
+                </xpath>
             </field>
         </record>
+
   </data>
 </odoo>

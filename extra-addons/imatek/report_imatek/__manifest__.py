@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "verticals",
+    'name': "report_imatek",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,17 +20,19 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'sale', 'mail'],
+    'depends': ['base', 'sale'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/verticals.xml',
-        'views/sale_order.xml',
-        'views/product_template.xml',
+        # 'security/ir.model.access.csv',
+        'views/report_sale_order.xml',
+        'views/report_purchase_order.xml',
+        'views/report_purchase_quotation.xml',
+        'views/report_sale_picking_operation.xml',
+        'views/report_sale_delivery_slip.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
 }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "verticals",
+    'name': "custom_purchase",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,17 +20,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'sale', 'mail'],
+    'depends': ['base', 'stock'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/verticals.xml',
-        'views/sale_order.xml',
-        'views/product_template.xml',
+        # 'security/ir.model.access.csv',
+        'views/stock_picking.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
 }

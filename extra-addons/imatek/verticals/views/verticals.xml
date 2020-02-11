@@ -1,14 +1,14 @@
 <odoo>
     <data>
         <!-- FORM FOR VERTICALS LOT -->
-        <record id="verticals_lots_form" model="ir.ui.view">
+        <record id="verticals_form" model="ir.ui.view">
             <field name="name">verticals.verticals.form</field>
             <field name="model">verticals.verticals</field>
             <field name="arch" type="xml">
-                <form string="Lotes Verticales">
+                <form string="Verticales">
                     <group>
-                        <field name="name"/>
-                        <field name="pdf_bin"/>
+                        <field name="name" string='Vertical'/>
+                        <field name="attachment_id"/>
                     </group>
                     <hr/>
                     <field name="product_ids"/>
@@ -16,13 +16,13 @@
             </field>
         </record>
 
-        <record id="verticals_lots_form" model="ir.ui.view">
+        <record id="verticals_tree" model="ir.ui.view">
             <field name="name">verticals.verticals.tree</field>
             <field name="model">verticals.verticals</field>
             <field name="arch" type="xml">
                 <tree string='Verticales'>
                     <field name="name"/>
-                    <field name="pdf_bin"/>
+                    <field name="attachment_id"/>
                     <field name="product_ids" widget="many2many_tags"/>
                 </tree>
             </field>

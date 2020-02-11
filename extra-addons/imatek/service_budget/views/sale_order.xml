@@ -34,18 +34,6 @@
                         <div class="oe_clear"/>
                     </group>
 
-                    <!-- <group name="note_group2" col="6">
-                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                            <h3 class='oe_right'>Total</h3>
-                            <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                <label for="amount_total" />
-                            </div>
-                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                        <div class="oe_clear"/>
-                    </group> -->
                 </xpath>
             </field>
         </record>

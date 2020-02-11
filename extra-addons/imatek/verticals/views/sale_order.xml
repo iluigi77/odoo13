@@ -1,17 +1,5 @@
 <odoo>
     <data>
-        <!-- PDF BIN FOR  ORDER SALE -->
-        <record id="vertical_lot_for_sale_order" model="ir.ui.view">
-            <field name="name">sale.order.form.vertical_lot</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_shipping_id']" position="after">
-                    <field name="pdf_bin"/>
-                </xpath>
-            </field>
-        </record>
-
         <!-- VERTICALS LOT FOR ORDER SALE -->
         <record id="list_vertical_lot_for_sale_order" model="ir.ui.view">
             <field name="name">sale.order.form.vertical_lot</field>
@@ -20,20 +8,19 @@
             <field name="arch" type="xml">
                 <xpath expr="//form//sheet//notebook[1]" position="before">
                     <group>
-                        <field name="vertical_id" widget="many2many_tags"/>
+                        <field name="vertical_ids" widget="many2many_tags"/>
                     </group>
                 </xpath>
             </field>
         </record>
 
         <record id="service_in_order_line" model="ir.ui.view">
-            <field name="name">sale.order.no_budgetable_order_line</field>
+            <field name="name">sale.order.line.inherit</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
-                    <field name="vertical"  />
-                    <field name="product_category_id"  />
+                    <field name="vertical_id"  />
                 </xpath>
             </field>
         </record>

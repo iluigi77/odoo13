@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id='view_picking_form_albaran_inherit' model='ir.ui.view'>
+            <field name='name'>stock.picking.form</field>
+            <field name='model'>stock.picking</field>
+            <field name='inherit_id' ref='stock.view_picking_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//form//header//button[@name='button_validate'][1]" position='replace'>
+                    <button 
+                        name="button_validate" 
+                        attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" 
+                        string="Validar PIR" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+
+                    <!-- <button 
+                        name="button_validate" 
+                        attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False), ('picking_type_code', '=', 'incoming')]}" 
+                        string="Validar2" type="object" class="oe_highlight" groups="stock.group_stock_user"/> -->
+                </xpath>
+            </field>
+        </record>
+
+        <record id='view_picking_form_view_inherit' model='ir.ui.view'>
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name='inherit_id' ref='stock.view_picking_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_uom_qty']" position='replace'>
+                        <field name="product_uom_qty" string="Demanda" attrs="{'column_invisible': [('parent.immediate_transfer', '=', True)], 'readonly': [('is_initial_demand_editable', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='quantity_done']" position='replace'>
+                        <field name="quantity_done" string="Recibido" attrs="{'readonly': [('is_quantity_done_editable', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

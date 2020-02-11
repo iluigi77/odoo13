@@ -1,51 +1,29 @@
 <odoo>
     <data>
         <record id="product_template_verticals" model="ir.ui.view">
-            <field name="name">product.template.pdf</field>
+            <field name="name">product.template.vertical</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='group_general']" position="inside">
-                    <field name="pdf_bin"/>
-                    <field name="vertical_id" options="{'no_open':False}"/>
+                    <field name="attachment_id"/>
+                    <field name="vertical_ids" options="{'no_open':False}" widget='many2many_tags'/>
                 </xpath>
 
                 <xpath expr="//page[@name='general_information']//group[1]" position="after">
-                    <page name="list_for_vertical_lot" >
-                        <group string="Vertical">
-                            <tree >
-                                <field name="products_by_lots" />
-                            </tree>
-                        </group>
-                    </page>    
+                    <notebook>
+                        <page name="list_for_vertical_lot" string='Verticales'>
+                            <field name='vertical_products'>
+                                <tree string="Verticales">
+                                    <field name='name'/>
+                                </tree>
+                            </field>
+                        </page>    
+                    </notebook>
                 </xpath>
           </field>
         </record>
 
-        <!-- <record id="product_template_form_view_bom_button" model="ir.ui.view">
-            <field name="name">product.template.procurement</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_only_form_view"/>
-            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
-            <field name="arch" type="xml">
-                <xpath expr="//button[@name='action_open_product_lot']" position="after">
-                    <button class="oe_stat_button" name="show_list_products_by_lots" type="action"
-                         icon="fa-list">
-                        <field string="Verticales" name="products_by_lots" widget="statinfo" />
-                    </button>
-                </xpath>
-            </field>
-        </record>
-
-        <record id="show_list_products_by_lots" model="ir.ui.view">
-            <field name="name">product.template.verticals.tree</field>
-            <field name="model">product.template</field>
-            <field name="arch" type="xml">
-                <tree string="Productos por Verticales" create="0">
-                    <field name="products_by_lots" />
-                </tree>
-            </field>
-        </record> -->
 
     </data>
 </odoo>
