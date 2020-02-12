@@ -6,12 +6,14 @@ class OrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     no_budgetable= fields.Boolean(string= 'No Contable')
+    is_service= fields.Boolean(string= 'Es servicio')
 
     @api.model
     def create(self, values):
         id= values['product_id']
         p=self.env['product.product'].browse([id])
         values['no_budgetable'] = p.no_budgetable
+        values['is_service'] = True if p.type== 'service' else False
         res = super(OrderLine, self).create(values)
         return res
 
@@ -32,7 +34,7 @@ class SaleOrder(models.Model):
             amount_untaxed_no = amount_tax_no = 0.0
             amount_untaxed = amount_tax = 0.0
             for line in order.order_line:
-                if line.no_budgetable:
+                if line.is_service:
                     amount_untaxed_no += line.price_subtotal #Suma el subtotal
                     amount_tax_no += line.price_tax #suma el impuesto
                 else:

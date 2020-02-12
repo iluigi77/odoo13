@@ -97,11 +97,11 @@
 
                             <t t-foreach="doc.order_line" t-as="line">
 
-                                <t t-if="not line.no_budgetable" t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                <t t-if="not line.no_budgetable" t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                <t t-if="not line.is_service" t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-if="not line.is_service" t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                    <t t-if="not line.no_budgetable and not line.display_type">
+                                    <t t-if="not line.is_service and not line.display_type">
                                         <td name="td_name"><span t-field="line.name"/></td>
                                         <td name="td_quantity" class="text-right">
                                             <span t-field="line.product_uom_qty"/>
@@ -180,7 +180,7 @@
                     <hr/>
                     <br/>
                     <!-- SERVICIOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
-                    <t t-set="array_services" t-value="[(task) for task in doc.order_line if task.no_budgetable== True]" />
+                    <t t-set="array_services" t-value="[(task) for task in doc.order_line if task.is_service== True]" />
                     <t t-if='len(array_services)  > 0' >
                         <h5 style='font-size: 13px;'>Servicios</h5>
                         <br/>
@@ -206,11 +206,11 @@
 
                                 <t t-foreach="array_services" t-as="line">
 
-                                    <t t-if="line.no_budgetable" t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                    <t t-if="line.no_budgetable" t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                    <t t-if="line.is_service" t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <t t-if="line.is_service" t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
 
                                     <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                        <t t-if="line.no_budgetable and not line.display_type">
+                                        <t t-if="line.is_service and not line.display_type">
                                             <td name="td_name"><span t-field="line.name"/></td>
                                             <td name="td_quantity" class="text-right">
                                                 <span t-field="line.product_uom_qty"/>

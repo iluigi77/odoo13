@@ -33,7 +33,7 @@
             <field name="res_model">verticals.verticals</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem id="reports_menu_root" name="Verticales" sequence="30"  action="action_report_verticals"/> 
+        <menuitem id="reports_menu_root" name="Verticales" sequence="30"  action="action_report_verticals" web_icon="verticals,static/description/icon.png"/> 
     
 
     </data>

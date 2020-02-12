@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "report_imatek",
+    'name': "stock_picking_generate_order",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,7 +10,7 @@
         Long description of module's purpose
     """,
 
-    'author': "Luis Gonzalez",
+    'author': "luis gonzalez",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,19 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'service_budget'],
+    'depends': ['base', 'stock'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/report_sale_order.xml',
-        'views/report_purchase_order.xml',
-        'views/report_purchase_quotation.xml',
-        'views/report_sale_picking_operation.xml',
-        'views/report_sale_delivery_slip.xml',
+        'views/views.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        # 'demo/demo.xml',
+        'demo/demo.xml',
     ],
 }
