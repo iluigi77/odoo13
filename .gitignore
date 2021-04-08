@@ -133,5 +133,5 @@ config/
 odoo/
 
 submodules/
-
+l10nve/
 \.vscode/
