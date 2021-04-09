@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!-- only on debug for fix price -->
+        <record id='product_variant_easy_edit_price_view_inherit' model='ir.ui.view'>
+            <field name='name'>product.product.form.fix_price.inherit</field>
+            <field name='model'>product.product</field>
+            <field name='inherit_id' ref='product_variant_sale_price.product_variant_easy_edit_price_view'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='fix_price']" position='attributes'>
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="product_variant_easy_edit_price_view_hide_lst_price" model="ir.ui.view">
+            <field name="name">product.product.hide.lst_price</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="attributes">
+                    <attribute name="groups">base.group_system</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

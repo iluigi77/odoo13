@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+         <record id='product_template_form_view_dollar_price_inherit' model='ir.ui.view'>
+            <field name='name'>product.template.form.inherit.dollar_price</field>
+            <field name='model'>product.template</field>
+            <field name='inherit_id' ref='product.product_template_form_view'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//div[@name='options']" position='inside'>
+                    <div>
+                        <!-- FOR DOLLAR PRICE -->
+                        <field name="dollar_active" invisible='1'/>
+                        <label for="dollar_active" string='Producto en Dólar ($)' invisible='1' />
+                        
+                        <!-- SHOW CURRENCY REFERENCE -->
+                        <label for="dollar_currency_id" string='Moneda de referencia: ' />
+                        <field name='dollar_currency_id'/>
+
+                    </div>
+                </xpath>
+
+                <!-- SET DOLLAR PRICE -->
+                <xpath expr="//label[@for='list_price']" position='before'>
+                    <field  name="dollar_price"  
+                            widget='monetary' 
+                            options="{'currency_field': 'dollar_currency_id', 'field_digits': True}"
+                            attrs="{'invisible': ['|', ('dollar_active', '=', False), ('product_variant_count', '>', 1)]}"
+                    />
+                    <field name="dollar_currency_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
