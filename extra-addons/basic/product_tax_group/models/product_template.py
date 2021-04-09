@@ -21,7 +21,7 @@ class ProductTemplate(models.Model):
             if self.company_id:
                 companies= self.company_id._get_companies()
             else:
-                companies= self.env['res.company'].sudo().search()
+                companies= self.env['res.company'].sudo().search([]).ids
 
             ids = [(tax.id) for tax in self.client_tax_group_id.taxes_id if (tax.type_tax_use== 'sale' and tax.company_id.id in companies)] 
             self.taxes_id = [(6, 0, ids)]
@@ -34,7 +34,7 @@ class ProductTemplate(models.Model):
             if self.company_id:
                 companies= self.company_id._get_companies()
             else:
-                companies= self.env['res.company'].sudo().search()
+                companies= self.env['res.company'].sudo().search([]).ids
 
             ids = [(tax.id) for tax in self.supplier_tax_group_id.taxes_id if (tax.type_tax_use== 'purchase' and tax.company_id.id in companies)] 
             self.supplier_taxes_id = [(6, 0, ids)]
@@ -46,7 +46,7 @@ class ProductTemplate(models.Model):
         if self.company_id:
             companies= self.company_id._get_companies()
         else:
-            companies= self.env['res.company'].sudo().search()
+            companies= self.env['res.company'].sudo().search([]).ids
 
         obj_company={}
         for company in companies:
@@ -64,7 +64,7 @@ class ProductTemplate(models.Model):
         if self.company_id:
             companies= self.company_id._get_companies()
         else:
-            companies= self.env['res.company'].sudo().search()
+            companies= self.env['res.company'].sudo().search([]).ids
 
         obj_company={}
         for company in companies:

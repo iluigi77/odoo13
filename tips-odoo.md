@@ -1,6 +1,44 @@
+# JS
+### static
+~~~
+/// convierte un array en un objeto con la key indicada
+const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+        return {
+        ...obj,
+        [item[key]]: item,
+        };
+    }, initialValue);
+};
+~~~
+
 # Odoo
 
 ## Frontend.
+
+### Color in treeview line
+~~~
+<tree decoration-muted="scrapped == True" string="Stock Moves">
+    ...
+</tree>
+
+decoration-bf : shows the line in BOLD
+
+decoration-it : shows the line in ITALICS
+
+decoration-danger : shows the line in LIGHT RED
+
+decoration-info : shows the line in LIGHT BLUE
+
+decoration-muted : shows the line in LIGHT GRAY
+
+decoration-primary : shows the line in LIGHT PURPLE
+
+decoration-success : shows the line in LIGHT GREEN
+
+decoration-warning : shows the line in LIGHT BROWN
+~~~
 
 ### readonly dinamico
 ~~~
@@ -79,18 +117,30 @@
     <button string="tester" type="action" name="show_list_products_by_lots" />
 </xpath> 
 ~~~
-
-
 ___ 
 
 
+### [HERENCIA]: agregar grupo admin a elemento
+~~~
+<!-- base.group_system -->
+<xpath expr="//button[@name='action_view_invoice']" position='attributes'>
+    <attribute name="groups">base.group_system</attribute>
+</xpath>
+~~~
+
+### [HERENCIA]: agregar modo debug a elemento
+~~~
+<!-- base.group_no_one -->
+<xpath expr="//button[@name='action_view_invoice']" position='attributes'>
+    <attribute name="groups">base.group_no_one</attribute>
+</xpath>
+~~~
 
 ## Backend.
 
 ### Ternario
 ~~~
 resultado = valor_si if condicion else valor_no
-
 ~~~
 
 ### Heredar de un modelo
@@ -114,7 +164,7 @@ products_lot = self.vertical_id.mapped('product_ids')
             line.product_id_change()
 ~~~
 
-### search operators
+### operators for search
 ~~~
 Can anyone provide me a scenario where we need to use these operators in domain:
 
@@ -187,72 +237,73 @@ class NameClass(....):
     _order = "custom_field_name, other_field ..." (you can add option asc or desc too)
 ~~~
 
-# mientras
+### excute sql query
 ~~~
- <page string='Actividades'>
-                                <field name="activities_seccion" mode='tree'>
-                                    <tree
-                                        decoration-bf="type_row == 'seccion'"
-                                        decoration-info="type_row == 'subseccion'"
-                                        decoration-warning="type_row == 'shor_activity'"
-                                        >
-                                        <field name='header_name'/>
-                                        <field name='name'/>
-                                        <field name='url'/>
-                                        <field name='type_row' invisible="1"/>
-                                    </tree>
-                                </field>
-                                <div class="oe_clear"/>
-                            </page>
+@api.one
+def test(self):
+    self.env.cr.execute("""
+        SELECT a.id as id, COALESCE(MAX(m.date),a.date) AS date
+        FROM account_asset_asset a
+        LEFT JOIN account_asset_depreciation_line rel ON (rel.asset_id = a.id)
+        LEFT JOIN account_move m ON (rel.move_id = m.id)
+        WHERE a.id IN %s
+        GROUP BY a.id, m.date """, (tuple(self.ids),))
+    result = dict(self.env.cr.fetchall())
+    return result
 ~~~
 
-# baul
+### [xmlrpc]: config
 ~~~
-def generate_activities(self):
-    self.activities_seccion= [(3,t.id) for t in self.activities_seccion]
-    res = {}
-    for item in self.activity_url:
-        # crea una entrada en el dict (seccion)
-        res.setdefault(item['seccion_id']['name'], {})
-        # a la entrada creada, le crea otra entrada (subseccion) y le a;ade un elemento al array
-        res[item['seccion_id']['name']].setdefault(item['subseccion_id']['name'], []).append(item.read(["name", "url", "short_timesheet"])[0])
-    
-    for seccion in res:
-        self.activities_seccion=[(0,0,{
-            'header_name': seccion,
-            'type_row': 'seccion',
-        })]
-        for sub in res[seccion]:
-            self.activities_seccion=[(0,0,{
-                'header_name': sub,
-                'type_row': 'subseccion',
-            })]
-            for p in res[seccion][sub]:
-                self.activities_seccion=[(0,0,{
-                    'header_name': '->',
-                    'name': p['name'],
-                    'url': p['url'],
-                    'type_row': 'activity' if not p['short_timesheet'] else 'shor_activity',
-                })] 
+url = "http://10.15.2.235:8058"
+db = "cameva_prod"
+username = 'admin'
+password = 'U1n7110q13u19e&&:'
+common = client.ServerProxy('{}/xmlrpc/2/common'.format(url))
+common_models = client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 ~~~
 
-
+### [xmlrpc]: use
 ~~~
-<!-- <record id="posik_project_view_form" model="ir.ui.view">
-        <field name="name">account.analytic.line.tree.posik_project</field>
-        <field name="model">account.analytic.line</field>
-        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='task_id']" position="after">
+@api.one
+def test(self):
+    # Read all products
+    # uid = self._get_uid()
+    model_name = 'product.template'
+    partner_ids = common_models.execute_kw(db, uid, password, model_name, 'search', [[['default_code', '=', 'PR/06171']]] )
+    partner_records = common_models.execute_kw(db, uid, password, model_name, 'read', [partner_ids])
+    return partner_records   
+~~~
 
-                <field name='client_id' class="o_task_user_field" options='{"no_open": True}'/>
-                <field name='web_client' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                <field name='url'/>
-                <field name='seccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                <field name='subseccion_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
-                            
-            </xpath>
+### json to string
+~~~
+return json.dumps({'status': True})
+~~~
 
-        </field>
-    </record> -->
+### string to json
+~~~
+return json.loads('string_to_convert')
+~~~
+
+### switcher
+~~~
+switcher = {
+    1: "Enero",
+    2: "Febrero",
+    3: "Marzo",
+    4: "Abril",
+    5: "Mayo",
+    6: "Junio",
+    7: "Julio",
+    8: "Agosto",
+    9: "Septiembre",
+    10: "Octubre",
+    11: "Noviembre",
+    12: "Diciembre"
+}
+return switcher.get(argument, "Mes inválido")
+~~~
+
+### [object]: retorna lo que se quiere si el key no existe
+~~~
+obj.get('attachment_ids', [])
 ~~~

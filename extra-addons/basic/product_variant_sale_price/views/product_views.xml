@@ -10,13 +10,16 @@
             <xpath expr="//field[@name='list_price']" position="attributes">
                 <attribute name="attrs">{'invisible': [ ('product_variant_count', '>', 1) ]}</attribute>
             </xpath>
+            <xpath expr="//label[@for='list_price']" position="attributes">
+                <attribute name="attrs">{'invisible': [ ('product_variant_count', '>', 1) ]}</attribute>
+            </xpath>
 
             <!-- SHOW MSJ FOR LIST PRICE VARIANT -->
-            <xpath expr="//field[@name='list_price']" position="after">
-                <div name="msj" attrs="{'invisible': [('product_variant_count', '=', 1)]}">
+            <!-- <xpath expr="//field[@name='list_price']" position="after">
+                <div name="msj" attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}">
                     <p >Definir en variantes</p>
                 </div>
-            </xpath>
+            </xpath> -->
             
         </field>
     </record>
