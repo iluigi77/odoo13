@@ -42,39 +42,41 @@ class ProductTemplate(models.Model):
 
     @api.constrains('taxes_id')
     def _validate_for_taxes_id(self):
-        companies= []
-        if self.company_id:
-            companies= self.company_id._get_companies()
-        else:
-            companies= self.env['res.company'].sudo().search([]).ids
+        if False:
+            companies= []
+            if self.company_id:
+                companies= self.company_id._get_companies()
+            else:
+                companies= self.env['res.company'].sudo().search([]).ids
 
-        obj_company={}
-        for company in companies:
-            obj_company.setdefault(company, 0)
+            obj_company={}
+            for company in companies:
+                obj_company.setdefault(company, 0)
 
-        for tax in self.taxes_id:
-            obj_company[tax.company_id.id] += 1
+            for tax in self.taxes_id:
+                obj_company[tax.company_id.id] += 1
 
-        if(not self._check_tax(obj_company.values()) ):
-            raise UserError("Los impuestos de cliente no están bien definidos para todas las compañias en este producto.")
+            if(not self._check_tax(obj_company.values()) ):
+                raise UserError("Los impuestos de cliente no están bien definidos para todas las compañias en este producto.")
 
     @api.constrains('supplier_taxes_id')
     def _validate_for_supplier_taxes_id(self):
-        companies= []
-        if self.company_id:
-            companies= self.company_id._get_companies()
-        else:
-            companies= self.env['res.company'].sudo().search([]).ids
+        if False:
+            companies= []
+            if self.company_id:
+                companies= self.company_id._get_companies()
+            else:
+                companies= self.env['res.company'].sudo().search([]).ids
 
-        obj_company={}
-        for company in companies:
-            obj_company.setdefault(company, 0)
+            obj_company={}
+            for company in companies:
+                obj_company.setdefault(company, 0)
 
-        for tax in self.supplier_taxes_id:
-            obj_company[tax.company_id.id] += 1
+            for tax in self.supplier_taxes_id:
+                obj_company[tax.company_id.id] += 1
 
-        if(not self._check_tax(obj_company.values()) ):
-            raise UserError("Los impuestos de Proveedor no están bien definidos para todas las compañias en este producto.")
+            if(not self._check_tax(obj_company.values()) ):
+                raise UserError("Los impuestos de Proveedor no están bien definidos para todas las compañias en este producto.")
     
     def _check_tax(self, taxes):
         for tax in taxes:

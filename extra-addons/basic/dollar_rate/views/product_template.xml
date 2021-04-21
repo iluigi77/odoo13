@@ -7,7 +7,7 @@
             <field name='arch' type='xml'>
                 <!-- only on debug for list price -->
                 <xpath expr="//field[@name='list_price']" position='attributes'>
-                    <attribute name="groups">base.group_no_one</attribute>
+                    <!-- <attribute name="groups">base.group_no_one</attribute> -->
                     <attribute name="string">list_price</attribute>
                 </xpath>
 

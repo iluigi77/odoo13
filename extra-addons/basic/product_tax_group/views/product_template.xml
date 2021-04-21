@@ -8,10 +8,10 @@
 
             <field name='arch' type='xml'>
                 <xpath expr="//field[@name='taxes_id']" position='before'>
-                    <field name='client_tax_group_id'/>
+                    <field name='client_tax_group_id' class="oe_edit_only"/>
                 </xpath>
                 <xpath expr="//field[@name='supplier_taxes_id']" position='before'>
-                    <field name='supplier_tax_group_id'/>
+                    <field name='supplier_tax_group_id' class="oe_edit_only"/>
                 </xpath>
                 <xpath expr="//field[@name='taxes_id']" position='attributes'>
                     <attribute name="required">1</attribute>

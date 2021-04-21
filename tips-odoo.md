@@ -254,10 +254,10 @@ def test(self):
 
 ### [xmlrpc]: config
 ~~~
-url = "http://10.15.2.235:8058"
-db = "cameva_prod"
+url = "http://127.0.0.1:8069"
+db = "dbname"
 username = 'admin'
-password = 'U1n7110q13u19e&&:'
+password = 'passw'
 common = client.ServerProxy('{}/xmlrpc/2/common'.format(url))
 common_models = client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 ~~~
