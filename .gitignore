@@ -138,6 +138,4 @@ odoo/
 
 # addons
 l10nve/
-
-# notes
-localizacion13enterprise/
+l10nve_enterpise_v13/
