@@ -5,6 +5,7 @@
     'summary': 'Precio de venta por Variantes fixed',
     'version': '12.0.1.0.0',
     'author': "Luis González",
+    'maintainer': ["Luis González"],
     'category': 'Product',
     # 'installable': True,
     'depends': [

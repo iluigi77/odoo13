@@ -1,0 +1,98 @@
+<odoo>
+  <data>
+    
+    <record id='view_order_form_sale_flow' model='ir.ui.view'>
+        <field name='name'>sale.order.form.sale_flow</field>
+        <field name='model'>sale.order</field>
+        <field name='inherit_id' ref='sale.view_order_form'/>
+        <field name='arch' type='xml'>
+            <!-- HIDE FIELDS -->
+            <!-- origen -->
+            <xpath expr="//field[@name='partner_invoice_id']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- destino -->
+            <xpath expr="//field[@name='partner_shipping_id']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- tarifa -->
+            <xpath expr="//field[@name='pricelist_id']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- plazo de pago -->
+            <xpath expr="//field[@name='payment_term_id']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Btns -->
+            <!-- action_draft -->
+            <!-- INHERIT FOR SALE_CANCEL_ORDER_CRON -->
+
+            <!-- preview sale order -->
+            <xpath expr="//button[@name='preview_sale_order']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- print -->
+            <!-- <xpath expr="//button[@name='print_quotation'][1]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='print_quotation'][2]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath> -->
+
+            <!-- Send quotation -->
+            <xpath expr="//button[@name='action_quotation_send'][1]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send'][2]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send'][3]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send'][4]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Alert cancelar -->
+            <xpath expr="//button[@name='action_cancel']" position='attributes'>
+                <attribute name="confirm">¿Esta seguro de cancelar este pedido de venta?</attribute>
+                <attribute name="groups">base.group_system</attribute>
+            </xpath>
+
+            <!-- Alert confirm -->
+            <xpath expr="//button[@name='action_confirm'][1]" position='attributes'>
+                <attribute name="confirm">¿Desea confirmar este pedido de venta?</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position='attributes'>
+                <attribute name="confirm">¿Desea confirmar este pedido de venta?</attribute>
+            </xpath>
+
+            <!-- Set Order line -->
+            <!-- Oculta configurar producto -->
+            <xpath expr="//field[@name='order_line']/tree/control/create[2]" position='replace'/>
+
+            <!-- hide description -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position='attributes'>
+                    <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position='attributes'>
+                    <attribute name="groups">base.group_system</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id='sale_order_form_quote_sale_flow' model='ir.ui.view'>
+        <field name='name'>sale.order.form.sale_flow2</field>
+        <field name='model'>sale.order</field>
+        <field name='inherit_id' ref='sale_management.sale_order_form_quote'/>
+        <field name='arch' type='xml'>
+            <!-- HIDE OPTIONAL PRODUCTS -->
+            <xpath expr="//notebook/page[2]" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

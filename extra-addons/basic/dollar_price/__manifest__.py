@@ -5,10 +5,11 @@
     'summary': """ Precio en $ para colorados""",
 
     'description': """
-        Establece precio en $ en la ficha de productos en colorados
+        Establece precio en $ en la ficha de productos
     """,
 
     'author': "Luis González",
+    'maintainer': ["Luis González"],
     'category': 'Product',
     'version': '0.1',
 

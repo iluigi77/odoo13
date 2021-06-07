@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config" model="ir.ui.view">
+        <field name="name">pos.config</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//div[@id="inventory_location"]' position='after'>
+                <h2>Pos Stock</h2>
+                <div class="row o_settings_container" > 
+                    <div class="col-xs-12 col-md-6 o_setting_box" >
+                        <div class="o_setting_left_pane">
+                            <field name="show_qty_available"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="show_qty_available" string="Mostrar cantidades"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box" >
+                        <label for="limit_qty" string="Cantidad Min" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                        <field name="limit_qty" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="allow_out_of_stock" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="allow_out_of_stock" string="Permitir venta en negativo" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <label for="manager_passw" string="Clave de caja" attrs="{'invisible':['|', ('show_qty_available','=',False), ('allow_out_of_stock','=',True)]}"/>
+                        <field name="manager_passw" password="True" attrs="{'invisible':['|', ('show_qty_available','=',False), ('allow_out_of_stock','=',True)]}"/>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="location_only" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="location_only" string="Obtener cantidades de un único almacén" attrs="{'invisible':[('show_qty_available','=',False)]}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <label  for="location_id" string="Localizacion de origen" 
+                                attrs="{'invisible':['|', ('show_qty_available','=',False), ('location_only','=',False)]}"/>
+                        <field  name="location_id" 
+                                attrs="{'invisible':['|', ('show_qty_available','=',False), ('location_only','=',False)], 'required': [('location_only', '=', True)]}"/>
+                    </div>
+
+                    
+
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

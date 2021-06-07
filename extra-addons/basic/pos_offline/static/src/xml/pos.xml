@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- <t t-extend="Chrome">
+        <t t-jquery="div.pos-content" t-operation="before">
+            <div class="offline-alert" id="offlineAlert">
+                <span class="center-text">
+                    En estos momentos se encuentra trabajando sin conexión
+                </span>
+            </div>
+        </t>
+    </t> -->
+</templates>

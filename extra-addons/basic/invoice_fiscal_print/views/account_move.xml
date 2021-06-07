@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+         <record id='view_move_form_fiscal_print_inherit' model='ir.ui.view'>
+            <field name='name'>account.move.form.fiscal_print</field>
+            <field name='model'>account.move</field>
+            <field name='inherit_id' ref='account.view_move_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//button[@name='action_post']" position='after'>
+                    <!-- agrega btn para imprimir factura por impresora fiscal -->
+                    <field name='fiscal_print' invisible='True'/>
+                    <button name="action_fiscal_print_order"
+                            type="object"
+                            attrs="{'invisible': ['|', '|',('type', 'not in', ['out_invoice']),('state','not in',('posted')), ('fiscal_print', '=', True)]}"
+                            string="Impresión Físcal" groups="account.group_account_invoice" class="oe_highlight"
+                    />
+                   
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

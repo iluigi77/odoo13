@@ -7,11 +7,24 @@
         <field name="arch" type="xml">
             <form string="Tasa del Dolar">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <field name='actual' invisible='1'/>
+                        <button class="oe_stat_button"
+                            name='set_rate_all_products'
+                            help="Aplicar Tasa del Dólar"
+                            string="Aplicar Tasa Actual"
+                            type="object" icon="fa-list" 
+                            attrs="{'invisible': [('actual', '=', False)]}" 
+                        />
+                    </div>
                     <group name="main">
-                        <field name="currency_usd_id" string="Moneda"/>
-                        <field name="currency_company_id" invisible="1"/>
-                        <field name="rate" widget='monetary' options="{'currency_field': 'currency_company_id', 'field_digits': True}"/>
-                        <field name="name"/>  
+                        <group>
+                            <field name="currency_usd_id" string="Moneda"/>
+                            <field name="currency_company_id" invisible="1"/>
+                            <field name="rate" widget='monetary' options="{'currency_field': 'currency_company_id', 'field_digits': True}"/>
+                            <field name="name"/>  
+                            
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -55,7 +68,7 @@
     </record>
 
     <!-- ACTION-->
-    <record model="ir.actions.act_window" id="currency_rate_records_action_window">
+    <record model="ir.actions.act_window" id="action_currency_rate">
         <field name="name">Histórico del Dólar</field>
         <field name="res_model">res.currency.line</field>
         <field name="view_mode">tree,form</field>
@@ -63,13 +76,14 @@
 
 
     <!-- Menu  list -->
-    <menuitem name="Histórico de tasa" 
-        id="main_currency_rate" 
+    <menuitem 
+        id="rates_menu_root" 
+        name="Histórico de tasas" 
+        sequence="5" 
         groups="purchase.group_purchase_manager"
-        sequence="99" 
-        action="currency_rate_records_action_window" 
-        parent="purchase.menu_procurement_management"
+        action="action_currency_rate" 
     />
+    
 
 
     <record id='view_currency_formview_inherit' model='ir.ui.view'>
@@ -80,7 +94,7 @@
 
             <xpath expr="//sheet/div[@name='button_box']" position='after'>
                 <div class="oe_button_box" name="button_box_absolute">
-                    <button class="oe_stat_button" string="Tasas" type="action" name="%(currency_rate_records_action_window)d"
+                    <button class="oe_stat_button" string="Tasas" type="action" name="%(action_currency_rate)d"
                         icon="fa-money" widget="statinfo" attrs="{'invisible': [('active', '=', False)]}"/>
                 </div>
             </xpath>

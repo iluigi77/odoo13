@@ -11,5 +11,6 @@ class ProductTemplate(models.Model):
 
     company_id = fields.Many2one('res.company', 'Company', index=1,
         default= _get_current_company)
-    # change_default=True
     
+
+    type = fields.Selection(default='product', tracking=True)

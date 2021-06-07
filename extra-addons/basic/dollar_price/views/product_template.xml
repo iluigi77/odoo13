@@ -27,6 +27,13 @@
                     />
                     <field name="dollar_currency_id" invisible="1"/>
                 </xpath>
+                <xpath expr="//label[@for='standard_price']" position='before'>
+                    <field  name="dollar_coste"  
+                            widget='monetary' 
+                            options="{'currency_field': 'dollar_currency_id', 'field_digits': True}"
+                            attrs="{'invisible': ['|', ('dollar_active', '=', False), ('product_variant_count', '>', 1)]}"
+                    />
+                </xpath>
             </field>
         </record>
 

@@ -1,0 +1,15 @@
+<odoo>
+    <template id="model_assets_backend" name="report_x_z assets" inherit_id="point_of_sale.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/report_x_z/static/src/js/report_client_action.js"></script>
+            <link rel="stylesheet" href="/report_x_z/static/src/css/style.css"/>
+
+        </xpath>
+    </template>
+
+    <!-- <template id="pos_assets_backend" name="pos assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/report_x_z/static/src/css/style.css"/>
+        </xpath>
+    </template> -->
+</odoo>

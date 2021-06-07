@@ -1,0 +1,16 @@
+.block-input{
+    color: #5d5d5d;
+    background: #f0eeee;
+    box-shadow: 0px 0px 0px 3px #d1d1d1;
+    /* box-shadow: 0px 0px 0px 3px #d2d2d2; */
+}
+
+.icon_credit{
+    color: grey !important;
+    background: white !important;
+}
+
+.credit_btn{
+    background: #6ec89b !important;
+    color: white !important;
+}

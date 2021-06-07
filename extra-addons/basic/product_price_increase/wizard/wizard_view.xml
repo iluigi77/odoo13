@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <record id="list_price_wizard_view" model="ir.ui.view">
+            <field name="name">Increase Price View</field>
+            <field name="model">list_price.increase.wizard</field>
+            <field name="arch" type="xml">
+                <form create="0">
+                    <group string="Condiciones de aumento">
+                        <group>
+                            <field name="target" required="True"/>
+                            <field name="base" widget="radio" required="True"/>
+                        </group>
+                        <group>
+                                <field 
+                                    name="type" 
+                                    attrs="{'invisible': [('base', '=', 'dollar')], 'required': [('base', '!=', 'dollar')]}"
+                                />
+                                <field 
+                                    name="value" 
+                                    string="Aumento (%)"
+                                    attrs="{'invisible': ['|',('base', '=', 'dollar'),('type', '!=', 'percentage')], 'required': ['|',('type', '=', 'percentage'),('base', '!=', 'dollar')]}"
+                                />
+                                <field 
+                                    name="value" 
+                                    string="Aumento Fijo"
+                                    attrs="{'invisible': ['|',('base', '=', 'dollar'),('type', '=', 'percentage')], 'required': ['|',('type', '!=', 'percentage'),('base', '!=', 'dollar')]}"
+                                />
+                                
+                                <field 
+                                    name="dollar_rate"
+                                    attrs="{'invisible': [('base', '!=', 'dollar')]}"
+                                    readonly="True"
+                                />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Productos" name="increase_lines">
+                            <field name="product_ids" options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}">
+                                <tree edit="0" create="0">
+                                    <field name='default_code'/>
+                                    <field name='name'/>
+                                    <field name='dollar_coste'/>
+                                    <field name='standard_price'/>
+                                    <field name='dollar_price'/>
+                                    <field name='list_price'/>
+                                    <field name='gap_dollar'/>
+                                    <field name='gap_value'/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="set_list_price" string="Preview de Precios" class="oe_right oe_highlight"
+                                type="object"/>
+                        <button string="Cancel" class="oe_right" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window 
+            id="increase_list_price_tree" 
+            name="Incremento de precio" 
+            res_model="list_price.increase.wizard" 
+            binding_model="product.template" 
+            view_mode="form"
+            target="new"
+            />
+       
+    </data>
+</odoo>

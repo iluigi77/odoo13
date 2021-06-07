@@ -1,0 +1,14 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="PrinterOrderWidget">
+        <div class="alert alert-info" id="id_alert" style="margin-bottom:0px;">
+            <p id="id_text"></p>
+        </div>
+    </t>
+
+    <t t-name="GenerateReportXZWidget">
+        <div class="alert alert-info" id="id_alert" style="margin-bottom:0px;">
+            <p id="id_text"></p>
+        </div>
+    </t>
+</templates>

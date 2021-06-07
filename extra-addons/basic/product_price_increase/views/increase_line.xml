@@ -1,0 +1,68 @@
+<odoo>
+  <data>      
+      <record id='increase_price_success_tree_view_cost' model='ir.ui.view'>
+            <field name='name'>increase_price.report.tree.cost</field>
+            <field name='model'>increase.line</field>
+            <field name='arch' type='xml'>
+                <tree editable="top" create="0" delete="0" >
+                    <field name='barcode' readonly="1"/>
+                    <field name='name' readonly="1" />
+
+                    <field name='standard_price' string="Actual Costo (Bs)"/>
+                    <field name='dollar_coste' readonly="1" string="Costo ($)" />
+                    
+                    <field name='new_cost'  string="Nuevo Costo (Bs)" class="success-cell"/>
+                    <field name='gap_coste' readonly="1"  string='Aumento Bs(%)' class="success-cell"/>
+
+                    <field name='list_price'  string="Actual Precio Venta (Bs)" class="muted-cell"/>
+                    <field name='dollar_price' readonly="1" string="Precio Venta ($)" class="muted-cell"/>
+
+
+                    <!-- <field name='gap_dollar' readonly="1"/>
+                    <field name='gap_value' readonly="1"/> -->
+                    
+                </tree>
+            </field>
+        </record>
+      <record id='increase_price_success_tree_view_price' model='ir.ui.view'>
+            <field name='name'>increase_price.report.tree.price</field>
+            <field name='model'>increase.line</field>
+            <field name='arch' type='xml'>
+                <tree editable="top" create="0" delete="0" >
+                    <field name='barcode' readonly="1"/>
+                    <field name='name' readonly="1" />
+
+                    <field name='standard_price'  string="Actual Costo (Bs)" class="muted-cell"/>
+                    <field name='dollar_coste' readonly="1" string="Costo ($)" class="muted-cell"/>
+
+                    <field name='list_price' string="Actual Precio Venta (Bs)"/>
+                    <field name='dollar_price' readonly="1" string="Precio Venta ($)" />
+                    <field name='gap_dollar' readonly="1"/>
+                    <!-- <field name='gap_value' readonly="1"/> -->
+
+                    <field name='new_price'  string="Nuevo Precio Venta (Bs)" class="success-cell"/>
+                    <field name='gap_list_price' readonly="1" string='Aumento Bs(%)' class="success-cell"/>
+                    
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_increase_price_preview_price">
+            <field name="name">Incremento de venta previsto</field>
+            <field name="res_model">increase.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="increase_price_success_tree_view_price" />
+            <field name="target">current</field>
+            <field name="context">{'save_btn_price_change':1}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_increase_price_preview_cost">
+            <field name="name">Incremento de costo previsto</field>
+            <field name="res_model">increase.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="increase_price_success_tree_view_cost" />
+            <field name="target">current</field>
+            <field name="context">{'save_btn_price_change':1}</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+    <record id='account_tax_view_inherit' model='ir.ui.view'>
+        <field name='name'>account.tax.form.tax_type</field>
+        <field name='model'>account.tax</field>
+        <field name='inherit_id' ref='account.view_tax_form'/>
+        <field name='arch' type='xml'>
+            <xpath expr="//form//sheet//notebook//page[1]//group[1]" position='before'>
+                <group>
+                    <group>
+                        <field name='tax_type'/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

@@ -9,7 +9,8 @@
     """,
 
     'author': "Luis González",
-    'category': 'purchases',
+    'maintainer': ["Luis González"],
+    'category': 'Purchase',
     'version': '0.1',
     'depends': [
         'base',

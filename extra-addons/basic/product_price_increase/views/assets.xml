@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="increases_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/product_price_increase/static/src/js/list_controller.js" />
+            <link rel="stylesheet" href="/product_price_increase/static/src/css/style.css"/>
+                              
+        </xpath>
+    </template>
+</odoo>
+
+

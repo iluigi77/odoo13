@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_confirm_payment_form" model="ir.ui.view">
+        <field name="name">Registrar Pago</field>
+        <field name="model">sale.confirm.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <!--<field name="transaction_id"/>!-->
+                        <field name="acquirer_id" string="Metodo de Pago" options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"/>
+                        <field name='dollar_payment'/>
+                        <field name="dollar_amount" string="Monto a pagar en Dólar" attrs="{'invisible': [('dollar_payment', '=', False)]}"/>
+                        <field name="amount_for_dollar" string="Monto a pagar en Bs" attrs="{'invisible': [('dollar_payment', '=', False)]}"/>
+                        <field name="amount" string="Monto a pagar Bs" attrs="{'invisible': [('dollar_payment', '=', True)]}"/>
+                    </group>
+                    <group>
+                        <field name="payment_date" string="Fecha de pago" />
+                        <!-- <field name="currency_id" string="Moneda"/> -->
+                    </group>
+                </group>
+                <footer>
+                    <button name="do_confirm" string="Confirmar" type="object" class="oe_highlight" />
+                    <button string="Cancelar" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_confirm_payment" model="ir.actions.act_window">
+        <field name="name">Registrar Pago</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.confirm.payment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_sale_confirm_payment_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

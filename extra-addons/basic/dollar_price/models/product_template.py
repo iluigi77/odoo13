@@ -7,7 +7,8 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     dollar_active= fields.Boolean(string='Producto en Dólar', default=True)
-    dollar_price= fields.Float(string='Precio en Dólar') # Precio en Dollar
+    dollar_price= fields.Float(string='Precio de Venta ($)', required=True) # Precio en Dollar
+    dollar_coste= fields.Float(string='Costo ($)') # Costo en Dollar
     dollar_currency_id = fields.Many2one('res.currency', compute='_get_dollar_currency',
         string='Currency', readonly=True, store=True)
 

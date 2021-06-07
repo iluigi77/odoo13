@@ -7,11 +7,21 @@
             <field name="priority">1</field>
 
             <field name='arch' type='xml'>
+                <!-- Company  -->
                 <xpath expr="//field[@name='company_id']" position='replace'/>
                 <xpath expr="//field[@name='type']" position='before'>
                     <field name='company_id'/>
                 </xpath>
+
+                <xpath expr="//field[@name='uom_id']" position='replace'/>
+                <xpath expr="//field[@name='uom_po_id']" position='replace'/>
+                <xpath expr="//field[@name='barcode']" position='after'>
+                    <field name='uom_id'/>
+                    <field name='uom_po_id'/>
+                </xpath>
+
             </field>
         </record>
+
     </data>
 </odoo>

@@ -1,0 +1,18 @@
+.header-seccion{
+    color: #000000;
+    background: #9e9e9e26;
+    box-shadow: 0px 0px 0px 3px #777777;
+    /* box-shadow: 0px 0px 0px 3px #d2d2d2; */
+}
+.body-seccion{
+    vertical-align: middle;
+}
+
+.success-msg{
+    color: #000000;
+    background: #00b818;
+}
+.error-msg{
+    color: #f7f7f7;
+    background:#ff4a4a;
+}

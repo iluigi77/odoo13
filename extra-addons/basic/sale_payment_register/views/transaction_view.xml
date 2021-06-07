@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id='payment_transaction_tree_view_inherit' model='ir.ui.view'>
+        <field name='name'>payment.transaction.list.inherit</field>
+        <field name='model'>payment.transaction</field>
+        <field name='inherit_id' ref='payment.transaction_list'/>
+        <field name='arch' type='xml'>
+            <xpath expr="//field[@name='fees']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='payment_transaction_search_view_inherit' model='ir.ui.view'>
+        <field name='name'>payment.transaction.search.inherit</field>
+        <field name='model'>payment.transaction</field>
+        <field name='inherit_id' ref='payment.transaction'/>
+        <field name='arch' type='xml'>
+            <xpath expr="//field[@name='partner_name']" position='after'>
+                <separator string="Estado de pago"/>
+                <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
+                <filter name="pending" string="Pendiente" domain="[('state', '=', 'pending')]"/>
+                <filter name="authorized" string="Autorizado" domain="[('state', '=', 'authorized')]"/>
+                <filter name="done" string="Hecho" domain="[('state', '=', 'done')]"/>
+                <filter name="cancel" string="Cancelado" domain="[('state', '=', 'cancel')]"/>
+                <filter name="error" string="Errado" domain="[('state', '=', 'error')]"/>
+                <separator/>
+
+                <filter string="Transacciones de Hoy" name="today_trasactions"
+                        domain="[   ('create_date', '&gt;=', context_today().strftime('%d/%m/%Y 00:00:00')), 
+                                    ('create_date', '&lt;=', context_today().strftime('%d/%m/%Y 23:59:59'))]"/>
+
+                <group string="Group By">
+                    <filter string="Responsable" name="grp_create_uid" context="{'group_by':'create_uid'}"/>
+                    <filter string="Método de pago" name="grp_acquirer_id" context="{'group_by':'acquirer_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+      <!-- ACTION-->
+        <record model="ir.actions.act_window" id="payment_transactions_action_window">
+            <field name="name">Histórico de Transacciones</field>
+            <field name="res_model">payment.transaction</field>
+            <field name='view_mode'>tree,kanban,form</field>
+            <field name="context">{'search_default_grp_create_uid': 1, 'search_default_grp_acquirer_id': 1}</field>
+
+        </record>
+ 
+
+        <!-- Menu  list -->
+        <menuitem name="Histórico de Transacciones" 
+            id="main_payment_transaction" 
+            sequence="20" 
+            action="payment_transactions_action_window" 
+            parent="sale.sale_order_menu"
+
+        />
+        <!-- <menuitem name="Histórico 2" 
+            id="main_payment_transaction2" 
+            sequence="21" 
+            action="payment.action_payment_transaction" 
+            parent="sale.sale_order_menu"
+        /> -->
+      
+</odoo>

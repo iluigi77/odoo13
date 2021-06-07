@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="SuccessInfoPopup">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-success-fp">
+                <p class="title"><t t-esc=" widget.options.title || 'Exito!' " /></p>
+                <p class="body-fp"><t t-esc=" widget.options.body || '' "/></p>
+                <p class="detail-fp"><t t-esc=" widget.options.detail || '' "/></p>
+                <div class='list_detail-fp'>
+                    <t t-foreach="widget.options.list_detail || []" t-as="item">
+                        <div t-attf-class="selection-item">
+                            <t t-esc='item.label'/><t t-esc='item.item'/>
+                        </div>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ErrorInfoPopup">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-error-fp">
+                <p class="title"><t t-esc=" widget.options.title || 'Exito!' " /></p>
+                <p class="body-fp"><t t-esc=" widget.options.body || '' "/></p>
+                <p class="detail-fp"><t t-esc=" widget.options.detail || '' "/></p>
+                <div class='list_detail-fp'>
+                    <t t-foreach="widget.options.list_detail || []" t-as="item">
+                        <div t-attf-class="selection-item " >
+                            <t t-esc='item.label'/><t t-esc='item.item'/>
+                        </div>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="WarningInfoPopup">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-warning-fp">
+                <p class="title"><t t-esc=" widget.options.title || 'Exito!' " /></p>
+                <p class="body-fp"><t t-esc=" widget.options.body || '' "/></p>
+                <p class="detail-fp"><t t-esc=" widget.options.detail || '' "/></p>
+                <div class='list_detail-fp'>
+                    <t t-foreach="widget.options.list_detail || []" t-as="item">
+                        <div t-attf-class="selection-item">
+                            <t t-esc='item.label'/><t t-esc='item.item'/>
+                        </div>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

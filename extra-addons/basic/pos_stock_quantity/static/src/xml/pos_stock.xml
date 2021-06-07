@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="pos_stock_quantity.template" inherit_id="point_of_sale.template">
+    <t t-extend="Product">
+        <t t-jquery=".product-img" t-operation="prepend">
+            <span class="qty-tag">
+            </span>
+        </t>
+    </t>
+
+<div role="dialog" class="modal-dialog">
+            <div class="popup popup-error-fp">
+                <p class="title"><t t-esc=" widget.options.title || 'Exito!' " /></p>
+                <p class="body-fp"><t t-esc=" widget.options.body || '' "/></p>
+                <p class="detail-fp"><t t-esc=" widget.options.detail || '' "/></p>
+                <div class='list_detail-fp'>
+                    <t t-foreach="widget.options.list_detail || []" t-as="item">
+                        <div t-attf-class="selection-item " >
+                            <t t-esc='item.label'/><t t-esc='item.item'/>
+                        </div>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    <t t-name="Reminder">
+        <div class="modal-dialog">
+            <div class="popup popup-warning">
+                <p class="title">
+                    <t t-esc=" widget.options.title || 'Warning' "/>
+                </p>
+                <div class="body">
+                    <div >
+                        <div style=" margin-left: 16px; text-align: center;">
+                            <p style="font-weight: bold;">
+                                <t t-esc="widget.options.product_name"/>
+                            </p>
+                            <p>
+                                Limite de Stock minimo: <span><b style="color: #32a868"><t t-esc="widget.options.max_available > 0? widget.options.max_available : 0 "/></b></span>
+                            </p>
+                            <p> Se ha alcanzado el limite minino en stock para este producto. </p>
+                            <p> <b> ¿Desea liberar el producto para permitir vender por debajo del limite minimo? </b> </p>
+                        </div>
+                        <input type="text" class="input-key" placeholder="Clave Gerente">
+                        </input>
+
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button cancel" style="width: 64px;">
+                        Cancelar
+                    </div>
+                    <!-- t-if="widget.options.max_available > 0"  -->
+                    <div
+                        class="button confirm"
+                        style="color: #32a868; width: 64px;">
+                        Liberar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

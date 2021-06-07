@@ -1,0 +1,9 @@
+<odoo>
+    <template id="model_assets_backend" name="invoice_fiscal_print assets" inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+        <script type="text/javascript" src="/invoice_fiscal_print/static/src/js/client_action.js"></script>
+        <link   rel="stylesheet"       href="/invoice_fiscal_print/static/src/css/style.css"/>
+
+      </xpath>
+    </template>
+</odoo>

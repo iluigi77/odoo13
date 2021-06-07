@@ -82,4 +82,24 @@ class CurrencyLine(models.Model):
 
     def _check_last_rate(self):
         last = self.env['res.currency.line'].sudo().search([],limit=1)
-        self.actual= True if last and last.id == self.id else False
+        for rate in self:
+            rate.actual= True if last and last.id == rate.id else False
+
+
+    def increase_to_current_rate(self, base, value):
+        return base* value
+
+    def set_rate_all_products(self):
+        products = self.env['product.template'].sudo().search([])
+        value= self.rate
+        increase = self.increase_to_current_rate
+
+        for product in products:
+            product.list_price= increase(product.dollar_price, value)
+        
+        return self.action_tree_product_template()
+
+    def action_tree_product_template(self):
+        self.ensure_one()
+        action = self.env.ref('report_gap.action_report_gap').read()[0]
+        return action
