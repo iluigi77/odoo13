@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+        <record id="car_model_view_form" model="ir.ui.view">
+            <field name="name">car.model.form</field>
+            <field name="model">car.model</field>
+            <field name="arch" type="xml">
+                <form string="Vehículo" >
+                    <sheet>
+                        <field name="name"/>
+                       
+                        <notebook>
+                             <page string="Facturas asociadas" name="invoices">
+                                <field name="invoice_ids" widget="section_and_note_one2many" readonly="1">
+                                    <tree 
+                                        decoration-success="state == 'done'"
+                                        decoration-muted="state == 'draft'"
+                                    >
+                                        <field name='name'/>
+                                        <field name='state'/>
+                                        <field name='amount_total'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="car_model_tree" model="ir.ui.view">
+            <field name="name">car.model.tree</field>
+            <field name="model">car.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="total_invoice" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="car_search" model="ir.ui.view">
+            <field name="name">car.model.search</field>
+            <field name="model">car.model</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="create_date" />
+                    <field name="total_invoice" />
+                </search>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_cars_model">
+            <field name="name">Registro de Vehículos</field>
+            <field name="res_model">car.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem   name="Registro de Vehículos" 
+                    id="cars_menu" 
+                    action="action_cars_model" 
+                    sequence="2"
+                    parent="car_services.cars_menu_root"
+        />
+    
+    </data>
+</odoo>

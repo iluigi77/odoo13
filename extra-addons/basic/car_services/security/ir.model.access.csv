@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_car_model,car_services.car_model,model_car_model,base.group_user,1,1,1,1
+access_car_services,car_services.car_services,model_car_services,base.group_user,1,1,1,1
+access_car_services_invoice,car_services.car_services_invoice,model_car_services_invoice,base.group_user,1,1,1,1
+access_car_services_invoice_line,car_services.car_services_invoice_line,model_car_services_invoice_line,base.group_user,1,1,1,1

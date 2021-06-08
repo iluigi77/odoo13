@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+
+        <record id="car_tree_best_sell" model="ir.ui.view">
+            <field name="name">car.model.tree.best_purchase</field>
+            <field name="model">car.model</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" default_order='total_line_qty desc' >
+                    <field name="name"/>
+                    <field name="total_line_qty"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="service_tree_best_sell" model="ir.ui.view">
+            <field name="name">car.services.tree.best_sell</field>
+            <field name="model">car.services</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" default_order='total_line_qty desc' >
+                    <field name="name"/>
+                    <field name="total_line_qty"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="total_line_amount" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_report_car">
+            <field name="name">Vehículo con mas servicios </field>
+            <field name="res_model">car.model</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="car_tree_best_sell" />
+
+        </record>
+
+        <record model="ir.actions.act_window" id="action_report_service">
+            <field name="name">Servicio mas vendido</field>
+            <field name="res_model">car.services</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="service_tree_best_sell" />
+
+        </record>
+
+        <menuitem   name="Informes" 
+                    id="report_cars_menu" 
+                    parent="car_services.cars_menu_root"
+                    sequence="4"
+        />
+        <menuitem   name="Servicio mas vendido" 
+                    id="service_report_menu" 
+                    action="action_report_service" 
+                    parent="car_services.report_cars_menu"
+                    sequence="1"
+        />
+
+        <menuitem   name="Vehículos con mas servicios" 
+                    id="car_report_menu" 
+                    action="action_report_car" 
+                    parent="car_services.report_cars_menu"
+                    sequence="2"
+        />
+    </data>
+</odoo>

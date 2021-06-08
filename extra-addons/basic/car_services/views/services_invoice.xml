@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <record id="service_invoice_view_form" model="ir.ui.view">
+            <field name="name">car.services.invoice.form</field>
+            <field name="model">car.services.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Vehículo" >
+                    <header>
+                        <button name="action_confirm" id="action_confirm"
+                            string="Confirmar" type="object"
+                            confirm='¿Desea confirmar esta factura?'
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+                        <!-- <button name="print_out_invoice" string="Imprimir" type="object" states="open" class="btn-primary o_sale_print"/> -->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group name="main">
+                            <field name='partner_name' attrs="{'readonly': [('state', 'in', ('done'))]}"/>
+                            <field name='car_id'  attrs="{'readonly': [('state', 'in', ('done'))]}"/>
+                        </group>
+
+                        <notebook>
+                             <page string="Servicios" name="services_page">
+                                <field
+                                    name="line_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    attrs="{'readonly': [('state', 'in', ('done'))]}"
+                                >
+                                    <tree string="Servicios" editable="bottom" >
+
+                                        <field name="service_id" />
+                                        <!-- <field name="name" widget="section_and_note_text"/> -->
+                                        <field name="qty" />
+                                        <field name="currency_id" invisible="1" />
+                                        <field name="cost_unit" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"  />
+                                        <field name="cost_total" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"  />
+                                    </tree>
+                                </field>
+                                <field name="amount_total" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            </page>
+                            
+                            
+                        </notebook>
+                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="service_invoice_tree" model="ir.ui.view">
+            <field name="name">car.services.invoice.tree</field>
+            <field name="model">car.services.invoice</field>
+            <field name="arch" type="xml">
+                <tree
+                    decoration-success="state == 'done'"
+                    decoration-bf="state == 'draft'"
+                >
+                    <field name="name"/>
+                    <field name="car_id"/>
+                    <field name='state'/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount_total" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"  />
+                </tree>
+            </field>
+        </record>
+
+        <record id="service_invoice_search" model="ir.ui.view">
+            <field name="name">car.services.invoice.search</field>
+            <field name="model">car.services.invoice</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="car_id"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount_total" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"  />
+                </search>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_service_invoice">
+            <field name="name">Facturas</field>
+            <field name="res_model">car.services.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem   name="Servicios de Vehículos" 
+                    id="cars_menu_root" 
+                    action="action_service_invoice" 
+                    sequence="1"
+        />
+
+        <menuitem   name="Facturas" 
+                    id="service_invoice_menu" 
+                    action="action_service_invoice" 
+                    parent="car_services.cars_menu_root"
+                    sequence="1"
+        />
+    
+    </data>
+</odoo>
