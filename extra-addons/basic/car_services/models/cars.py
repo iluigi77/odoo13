@@ -12,17 +12,8 @@ class Cars(models.Model):
     total_invoice= fields.Integer('Total de Facturas', compute="_get_total_invoice")
 
     """ for reports """
-    total_line_qty = fields.Float('Cantidad de servicios consumidos', compute="_compute_total_lines")
+    total_line_qty = fields.Float('Cantidad de servicios consumidos',default=0)
 
-    @api.depends('invoice_ids')
-    def _compute_total_lines(self):
-        for car in self:
-            total_line_qty= 0
-            for l in car.invoice_ids.line_ids:
-                if l.invoice_id.state == 'done':
-                    total_line_qty += l.qty
-
-            car.total_line_qty= total_line_qty
 
 
 
@@ -31,3 +22,8 @@ class Cars(models.Model):
         for car in self:
             invs= car.invoice_ids.filtered(lambda x: x.state == 'done')
             car.total_invoice= len(invs)
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        if self.name:
+            self.name = self.name.upper().strip()

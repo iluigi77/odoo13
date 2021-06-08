@@ -32,6 +32,7 @@
             <field name="name">Vehículo con mas servicios </field>
             <field name="res_model">car.model</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('total_line_qty', '>', 0)]</field>
             <field name="view_id" ref="car_tree_best_sell" />
 
         </record>
@@ -39,6 +40,7 @@
         <record model="ir.actions.act_window" id="action_report_service">
             <field name="name">Servicio mas vendido</field>
             <field name="res_model">car.services</field>
+            <field name="domain">[('total_line_qty', '>', 0)]</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="service_tree_best_sell" />
 

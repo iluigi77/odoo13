@@ -34,11 +34,12 @@ class ServiceInvoice(models.Model):
     name = fields.Char('Numero de Factura', help="Numero de factura.", required=True,  default=lambda self: _('New'))
     partner_name = fields.Char('Propietario', help="Nombre y apellido del propietario del vehiculo", required=True)
 
-    car_id = fields.Many2one('car.model', string='Matrícula', help="Patente/matrícula del vehículo.")
+    car_id = fields.Many2one('car.model', string='Matrícula', help="Patente/matrícula del vehículo." , required=True)
     line_ids = fields.One2many('car.services.invoice.line', 'invoice_id', string='Servicios')
     
 
-    amount_total = fields.Float(string="Total", compute="_compute_total_amount")
+    amount_total = fields.Monetary(string="Total", compute="_compute_total_amount")
+    total_service_qty = fields.Float(string="Total servicios", compute="_compute_total_service_qty")
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, readonly=True, default=lambda self: self.env.company.currency_id)
     
     state = fields.Selection([
@@ -52,11 +53,20 @@ class ServiceInvoice(models.Model):
     @api.depends('line_ids')
     def _compute_total_amount(self):
         for inv in self:
-            amount_total = 0.0
+            amount_total = 0
             for line in inv.line_ids:
                 amount_total += line.cost_total
 
             inv.update({ 'amount_total': amount_total })
+
+    @api.depends('line_ids', 'line_ids.qty')
+    def _compute_total_service_qty(self):
+        for inv in self:
+            total_qty = 0
+            for line in inv.line_ids:
+                total_qty += line.qty
+
+            inv.update({ 'total_service_qty': total_qty })
 
 
 
@@ -72,3 +82,10 @@ class ServiceInvoice(models.Model):
 
     def action_confirm(self):
         self.update({ 'state': 'done' })
+        qty=0
+        for line in self.line_ids:
+            qty += line.qty
+            line.service_id.total_line_qty += line.qty
+            line.service_id.total_line_amount += line.cost_total
+
+        self.car_id.total_line_qty += qty

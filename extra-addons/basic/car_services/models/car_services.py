@@ -14,18 +14,10 @@ class CarServices(models.Model):
     """ For reports """
     line_ids = fields.One2many('car.services.invoice.line', 'service_id',string='lineas asociadas')
 
-    total_line_qty = fields.Float('Cantidad vendida', compute="_compute_total_lines", store=True)
-    total_line_amount = fields.Float('Monto total', compute="_compute_total_lines")
+    total_line_qty = fields.Float('Cantidad vendida',default=0)
+    total_line_amount = fields.Float('Monto total',default=0)
 
-    @api.depends('line_ids')
-    def _compute_total_lines(self):
-        for serv in self:
-            total_line_amount= 0
-            total_line_qty= 0
-            for l in serv.line_ids:
-                if l.invoice_id.state == 'done':
-                    total_line_amount +=l.cost_total
-                    total_line_qty += l.qty
-
-            serv.total_line_amount= total_line_amount
-            serv.total_line_qty= total_line_qty
+    @api.onchange('name')
+    def _onchange_name(self):
+        if self.name:
+            self.name = self.name.upper().strip()

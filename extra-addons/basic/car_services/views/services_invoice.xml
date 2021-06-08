@@ -28,6 +28,8 @@
 
                         <notebook>
                              <page string="Servicios" name="services_page">
+                                <!-- <field name="total_service_qty" /> -->
+
                                 <field
                                     name="line_ids"
                                     widget="section_and_note_one2many"
@@ -36,7 +38,7 @@
                                 >
                                     <tree string="Servicios" editable="bottom" >
 
-                                        <field name="service_id" />
+                                        <field name="service_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}" />
                                         <!-- <field name="name" widget="section_and_note_text"/> -->
                                         <field name="qty" />
                                         <field name="currency_id" invisible="1" />
